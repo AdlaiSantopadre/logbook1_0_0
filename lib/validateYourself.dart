@@ -36,8 +36,8 @@ class _ValidateYourselfState extends State<ValidateYourself> {
             appBar: AppBar(
         title: Text("Login"),
       ),
-      body: Center(
-        child: Column(
+      body: 
+         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Username: $_username'),
@@ -48,8 +48,8 @@ class _ValidateYourselfState extends State<ValidateYourself> {
             ),
           ],
         ),
-      ),
-    );
+      )
+   ;
   }
 }
 
