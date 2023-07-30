@@ -1,15 +1,15 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 
-class ValidateYourself extends StatefulWidget {
-  const ValidateYourself({super.key});
-  //ValidateYourself({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({super.key});
+  //Login({Key? key}) : super(key: key);
 
   @override
-  _ValidateYourselfState createState() =>new  _ValidateYourselfState();
+  _LoginState createState() =>new  _LoginState();
 }
 
-class _ValidateYourselfState extends State<ValidateYourself> {
+class _LoginState extends State<Login> {
   
   String? _username;
   String? _password;
@@ -32,11 +32,7 @@ class _ValidateYourselfState extends State<ValidateYourself> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-            appBar: AppBar(
-        title: Text("Login"),
-      ),
-      body: 
+    return 
          Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -47,12 +43,11 @@ class _ValidateYourselfState extends State<ValidateYourself> {
               child: Text('Open Popup Window'),
             ),
           ],
-        ),
-      )
-   ;
+        
+     
+         );
   }
 }
-
 class PopupWindow extends StatefulWidget {
   final Function onDone; //definizione di onDone
 
@@ -161,4 +156,6 @@ class _PopupWindowState extends State<PopupWindow> {
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
   }  
+
+
 
