@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
 
-void main() => runApp(LogbookApp());
+import 'package:logbook1_0_0/components/DatePickerExemple.dart';
+//import 'package:login_flutter_app/pages/login.dart';
 
+void main()=>
+    runApp(RestorationScope(child: LogbookApp(),
+             restorationId: 'main'  ));
+ // enabled state restoration for the entire widget tree.
+void _handleDateSelected(DateTime selectedDate) {
+    // Handle the selected date here
+    print('Selected date: $selectedDate');
+    }  
 //MyApp is  LogbookApp
 class LogbookApp extends StatefulWidget {
+ 
   @override
   State<LogbookApp> createState() => _LogbookAppState();
 }
+
+
+ 
 
 class _LogbookAppState extends State<LogbookApp> {
   @override
@@ -30,6 +43,10 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   String? _username;
   String? _password;
+  
+  var restorableDatePickerRouteFuture;
+  
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +91,29 @@ class _HomepageState extends State<Homepage> {
             verticalDirection: VerticalDirection.down,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
+            children: [ 
+              
+              
+          /* OutlinedButton(
+          onPressed: () {
+            restorableDatePickerRouteFuture.present();
+          },
+          child: const Text('Open Date Picker'),
+        
+          ),*/
+          SizedBox(
+            width: 300.0,
+            height:300.0,
+
+            child: DatePickerExample(
+              onDateSelected: _handleDateSelected,
+            ),
+          ),
+    
+  
+              
+              
+              /*const Text(
                 'Datario',
                 style: TextStyle(
                   color: Colors.black,
@@ -84,7 +122,7 @@ class _HomepageState extends State<Homepage> {
                   letterSpacing: 0.5,
                   fontSize: 14,
                 ),
-              ),
+              ),*/
 
               //inserire qui il widget per il la autenticazione
               ElevatedButton(
@@ -241,6 +279,13 @@ class _PopupWindowState extends State<PopupWindow> {
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(value);
-  }  
+  }
+  
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+
 
 

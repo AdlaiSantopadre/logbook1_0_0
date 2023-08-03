@@ -37,6 +37,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  #in order to enable state restoration
+  provider: ^5.0.0
+  flutter_hooks: ^0.18.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -89,3 +93,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  
