@@ -4,8 +4,7 @@ import 'package:logbook1_0_0/components/DatePickerExemple.dart';
 //import 'package:login_flutter_app/pages/login.dart';
 
 void main()=>
-    runApp(RestorationScope(child: LogbookApp(),
-             restorationId: 'main'  ));
+    runApp(RestorationScope(restorationId: 'main', child: LogbookApp()  ));
  // enabled state restoration for the entire widget tree.
 void _handleDateSelected(DateTime selectedDate) {
     // Handle the selected date here
@@ -45,7 +44,31 @@ class _HomepageState extends State<Homepage> {
   String? _password;
   
   var restorableDatePickerRouteFuture;
-  
+  //List per gestire la navigazione nel drawer
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
  
 
   @override
@@ -53,6 +76,54 @@ class _HomepageState extends State<Homepage> {
     debugPrint('Building $runtimeType');
     return Scaffold(
       //Creo un visual scaffold con appbar e floatingActionButton e drawer
+      drawer: Drawer(
+         // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Home'),
+              selected: _selectedIndex == 0,
+              onTap: () {
+                // Update the state of the app
+                _onItemTapped(0);
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Business'),
+              selected: _selectedIndex == 1,
+              onTap: () {
+                // Update the state of the app
+                _onItemTapped(1);
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('School'),
+              selected: _selectedIndex == 2,
+              onTap: () {
+                // Update the state of the app
+                _onItemTapped(2);
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            _widgetOptions[_selectedIndex],
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: const Text(
           "Diario di bordo",
@@ -92,7 +163,7 @@ class _HomepageState extends State<Homepage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [ 
-              
+              _widgetOptions[_selectedIndex], 
               
           /* OutlinedButton(
           onPressed: () {
@@ -109,7 +180,7 @@ class _HomepageState extends State<Homepage> {
               onDateSelected: _handleDateSelected,
             ),
           ),
-    
+    // Ho utilizzato per il momento sized box (cfr widgedoftheweek per garantire la resa dei contenuti sulla Homepage
   
               
               
