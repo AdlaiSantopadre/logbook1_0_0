@@ -76,19 +76,26 @@ class _HomepageState extends State<Homepage> {
     debugPrint('Building $runtimeType');
     return Scaffold(
       //Creo un visual scaffold con appbar e floatingActionButton e drawer
+
       drawer: Drawer(
          // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
+        // space to fit everything.https://flutter.github.io/samples/add_a_drawer_to_a_screen.html
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                shape:BoxShape.rectangle,
+                
+                
+                
+                color: Colors.cyan
+                ,
               ),
-              child: Text('Drawer Header'),
+              child:Center(
+                child: Image.asset('lib/assets/B1logo.png')), //Text('Compiti assegnati'),
             ),
             ListTile(
               title: const Text('Home'),
