@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:logbook1_0_0/pages/pageVeicolo.dart';
+//Modifica Drawer come classe NavigationDrawer)
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
+      'Index 1: Veicolo',
       style: optionStyle,
     ),
     Text(
@@ -79,16 +80,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 _onItemTapped(0);
                 // Then close the drawer
                 Navigator.pop(context);
+                                   
               },
-            ),
+              ),
             ListTile(
-              title: const Text('Business'),
+              title: const Text('Veicolo'),
               selected: _selectedIndex == 1,
-              onTap: () {
-                // Update the state of the app
+              onTap: () {// Update the state of the app
                 _onItemTapped(1);
-                // Then close the drawer
-                Navigator.pop(context);
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PageVeicolo()),
+                                );
               },
             ),
             ListTile(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
-
+import 'package:logbook1_0_0/pages/pageEquipaggiamento.dart';
+import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
+import 'package:logbook1_0_0/pages/pageVeicolo.dart';
 import 'package:logbook1_0_0/components/DatePickerExemple.dart';
+import 'package:logbook1_0_0/pages/pageDPI.dart';
 //import 'package:login_flutter_app/pages/login.dart';
 
 void main()=>
@@ -29,7 +32,7 @@ class _LogbookAppState extends State<LogbookApp> {
     Then you can add the Center widget directly to the body property for the home page.*/
         title: 'Logbook HomePage',
         debugShowCheckedModeBanner: true, //mostra il banner debug mode
-        theme: ThemeData(primarySwatch: Colors.cyan),
+        theme: ThemeData(primarySwatch: Colors.cyan,canvasColor: Colors.cyan[100]),
         home: Homepage()); //Chiamata a HomePage home della navigazione
   }
 }
@@ -54,11 +57,23 @@ class _HomepageState extends State<Homepage> {
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
+      'Index 1: Veicolo',
       style: optionStyle,
     ),
     Text(
-      'Index 2: School',
+      'Index 2: Equipaggiamento',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: DPI',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 4: Primo soccorso',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 5: Dotazioni Antincendio',
       style: optionStyle,
     ),
   ];
@@ -98,6 +113,7 @@ class _HomepageState extends State<Homepage> {
                 child: Image.asset('lib/assets/B1logo.png')), //Text('Compiti assegnati'),
             ),
             ListTile(
+              
               title: const Text('Home'),
               selected: _selectedIndex == 0,
               onTap: () {
@@ -108,21 +124,59 @@ class _HomepageState extends State<Homepage> {
               },
             ),
             ListTile(
-              title: const Text('Business'),
+              leading:const Icon(Icons.drive_eta_rounded,color: Colors.blueGrey,),
+              title: const Text('Veicolo',textAlign: TextAlign.center,),
               selected: _selectedIndex == 1,
-              onTap: () {
-                // Update the state of the app
+              onTap: () {// Update the state of the app
                 _onItemTapped(1);
-                // Then close the drawer
-                Navigator.pop(context);
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PageVeicolo()),
+                                );
               },
             ),
             ListTile(
-              title: const Text('School'),
+              leading:const Icon(Icons.car_crash,color: Colors.blueGrey,),
+              title: const Text('PrimoSoccorso',textAlign: TextAlign.center,),
               selected: _selectedIndex == 2,
+              onTap: () {// Update the state of the app
+                _onItemTapped(2);
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PageEquipaggiamento()),
+                                );
+              },
+            ),
+            ListTile(
+              leading:const Icon(Icons.car_crash,color: Colors.blueGrey,),
+              title: const Text('Equipaggiamento',textAlign: TextAlign.center,),
+              selected: _selectedIndex == 3,
+              onTap: () {// Update the state of the app
+                _onItemTapped(3);
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PagePrimoSoccorso()),
+                                );
+              },
+            ),
+            ListTile(
+              leading:const Icon(Icons.safety_check,color: Colors.red,),
+              title: const Text('DPI',textAlign: TextAlign.center,),
+              selected: _selectedIndex == 4,
+              onTap: () {// Update the state of the app
+                _onItemTapped(5);
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PageDPI()),
+                                );
+              },
+            ),
+            ListTile(
+              title: const Text('Dotazioni Antincendio'),
+              selected: _selectedIndex == 5,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(2);
+                _onItemTapped(5);
                 // Then close the drawer
                 Navigator.pop(context);
               },
@@ -132,6 +186,7 @@ class _HomepageState extends State<Homepage> {
         ),
       ),
       appBar: AppBar(
+        flexibleSpace: Image.asset('lib/assets/B1logo.png'),
         title: const Text(
           "Diario di bordo",
           style: TextStyle(
