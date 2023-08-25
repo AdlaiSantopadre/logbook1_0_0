@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
+import 'package:intl/intl.dart';
 import 'package:logbook1_0_0/pages/pageEquipaggiamento.dart';
 import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
 import 'package:logbook1_0_0/pages/pageVeicolo.dart';
@@ -6,22 +7,19 @@ import 'package:logbook1_0_0/components/DatePickerExemple.dart';
 import 'package:logbook1_0_0/pages/pageDPI.dart';
 //import 'package:login_flutter_app/pages/login.dart';
 
-void main()=>
-    runApp(RestorationScope(restorationId: 'main', child: LogbookApp()  ));
- // enabled state restoration for the entire widget tree.
+void main() =>
+    runApp(RestorationScope(restorationId: 'main', child: LogbookApp()));
+// enabled state restoration for the entire widget tree.
 void _handleDateSelected(DateTime selectedDate) {
-    // Handle the selected date here
-    print('Selected date: $selectedDate');
-    }  
+  // Handle the selected date here
+  print('Selected date: $selectedDate');
+}
+
 //MyApp is  LogbookApp
 class LogbookApp extends StatefulWidget {
- 
   @override
   State<LogbookApp> createState() => _LogbookAppState();
 }
-
-
- 
 
 class _LogbookAppState extends State<LogbookApp> {
   @override
@@ -32,7 +30,8 @@ class _LogbookAppState extends State<LogbookApp> {
     Then you can add the Center widget directly to the body property for the home page.*/
         title: 'Logbook HomePage',
         debugShowCheckedModeBanner: true, //mostra il banner debug mode
-        theme: ThemeData(primarySwatch: Colors.cyan,canvasColor: Colors.cyan[100]),
+        theme: ThemeData(
+            primarySwatch: Colors.cyan, canvasColor: Colors.cyan[100]),
         home: Homepage()); //Chiamata a HomePage home della navigazione
   }
 }
@@ -42,10 +41,24 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
+
+
 class _HomepageState extends State<Homepage> {
   String? _username;
   String? _password;
-  
+  DateTime fixDate = DateTime.now();
+  FocusNode nextFocus = FocusNode();
+//devi aggiungere un TextEditingController
+// Create a text controller and use it to retrieve the current value
+// of the TextField.
+final dataController = TextEditingController();
+
+@override
+void dispose() {
+  // Clean up the controller when the widget is disposed.
+  dataController.dispose();
+  super.dispose();
+}
   var restorableDatePickerRouteFuture;
   //List per gestire la navigazione nel drawer
   int _selectedIndex = 0;
@@ -84,8 +97,6 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     debugPrint('Building $runtimeType');
@@ -93,27 +104,23 @@ class _HomepageState extends State<Homepage> {
       //Creo un visual scaffold con appbar e floatingActionButton e drawer
 
       drawer: Drawer(
-         // Add a ListView to the drawer. This ensures the user can scroll
+        // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.https://flutter.github.io/samples/add_a_drawer_to_a_screen.html
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-             DrawerHeader(
+            DrawerHeader(
               decoration: BoxDecoration(
-                shape:BoxShape.rectangle,
-                
-                
-                
-                color: Colors.cyan
-                ,
+                shape: BoxShape.rectangle,
+                color: Colors.cyan,
               ),
-              child:Center(
-                child: Image.asset('lib/assets/B1logo.png')), //Text('Compiti assegnati'),
+              child: Center(
+                  child: Image.asset(
+                      'lib/assets/B1logo.png')), //Text('Compiti assegnati'),
             ),
             ListTile(
-              
               title: const Text('Home'),
               selected: _selectedIndex == 0,
               onTap: () {
@@ -124,51 +131,81 @@ class _HomepageState extends State<Homepage> {
               },
             ),
             ListTile(
-              leading:const Icon(Icons.drive_eta_rounded,color: Colors.blueGrey,),
-              title: const Text('Veicolo',textAlign: TextAlign.center,),
+              leading: const Icon(
+                Icons.drive_eta_rounded,
+                color: Colors.blueGrey,
+              ),
+              title: const Text(
+                'Veicolo',
+                textAlign: TextAlign.center,
+              ),
               selected: _selectedIndex == 1,
-              onTap: () {// Update the state of the app
+              onTap: () {
+                // Update the state of the app
                 _onItemTapped(1);
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PageVeicolo()),
-                                );
+                  context,
+                  MaterialPageRoute(builder: (context) => const PageVeicolo()),
+                );
               },
             ),
             ListTile(
-              leading:const Icon(Icons.car_crash,color: Colors.blueGrey,),
-              title: const Text('PrimoSoccorso',textAlign: TextAlign.center,),
+              leading: const Icon(
+                Icons.car_crash,
+                color: Colors.blueGrey,
+              ),
+              title: const Text(
+                'PrimoSoccorso',
+                textAlign: TextAlign.center,
+              ),
               selected: _selectedIndex == 2,
-              onTap: () {// Update the state of the app
+              onTap: () {
+                // Update the state of the app
                 _onItemTapped(2);
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PageEquipaggiamento()),
-                                );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PageEquipaggiamento()),
+                );
               },
             ),
             ListTile(
-              leading:const Icon(Icons.car_crash,color: Colors.blueGrey,),
-              title: const Text('Equipaggiamento',textAlign: TextAlign.center,),
+              leading: const Icon(
+                Icons.car_crash,
+                color: Colors.blueGrey,
+              ),
+              title: const Text(
+                'Equipaggiamento',
+                textAlign: TextAlign.center,
+              ),
               selected: _selectedIndex == 3,
-              onTap: () {// Update the state of the app
+              onTap: () {
+                // Update the state of the app
                 _onItemTapped(3);
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PagePrimoSoccorso()),
-                                );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PagePrimoSoccorso()),
+                );
               },
             ),
             ListTile(
-              leading:const Icon(Icons.safety_check,color: Colors.red,),
-              title: const Text('DPI',textAlign: TextAlign.center,),
+              leading: const Icon(
+                Icons.safety_check,
+                color: Colors.red,
+              ),
+              title: const Text(
+                'DPI',
+                textAlign: TextAlign.center,
+              ),
               selected: _selectedIndex == 4,
-              onTap: () {// Update the state of the app
+              onTap: () {
+                // Update the state of the app
                 _onItemTapped(5);
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PageDPI()),
-                                );
+                  context,
+                  MaterialPageRoute(builder: (context) => const PageDPI()),
+                );
               },
             ),
             ListTile(
@@ -181,7 +218,7 @@ class _HomepageState extends State<Homepage> {
                 Navigator.pop(context);
               },
             ),
-            _widgetOptions[_selectedIndex],
+            // (show ListTile index number , name)  _widgetOptions[_selectedIndex],
           ],
         ),
       ),
@@ -219,33 +256,72 @@ class _HomepageState extends State<Homepage> {
         },*/
       body: Center(
         child: Container(
-          padding: EdgeInsets.all(1.0),
+          padding: EdgeInsets.all(8.0),
           child: Column(
             verticalDirection: VerticalDirection.down,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [ 
-              _widgetOptions[_selectedIndex], 
-              
-          /* OutlinedButton(
+            children: [
+              // (show ListTile index number , name)  _widgetOptions[_selectedIndex],         _widgetOptions[_selectedIndex],
+                              
+                TextField(
+                  style: TextStyle(fontSize: 10),
+                  controller: dataController, //[index][0],
+                  decoration: InputDecoration(hintText: 'Seleziona la Data'),
+                  
+                  onTap: () async {
+                    // Show date picker
+                    final pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: fixDate,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                    );
+
+                    if (pickedDate != null) {
+                      /* Show time picker
+                  final pickedTime = await showTimePicker(
+                    context: context,
+                    initialTime: selectedInitTime,
+                  );*/
+
+                      // if (pickedTime != null) {
+
+                      setState(() {
+                        fixDate = DateTime(
+                          pickedDate.year,
+                          pickedDate.month,
+                          pickedDate.day,
+                          //pickedTime.hour,
+                          //pickedTime.minute,
+                        );
+                        //controllers[index][0].text = selectedDate.toString();
+                        String formattedDate =
+                            DateFormat('dd-MM-yyyy ').format(fixDate);
+                        dataController.text = formattedDate;
+                        FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                      });
+                      // }
+                    }
+                  },
+                ),
+             
+              /* OutlinedButton(
           onPressed: () {
             restorableDatePickerRouteFuture.present();
           },
           child: const Text('Open Date Picker'),
         
           ),*/
-          SizedBox(
-            width: 300.0,
-            height:300.0,
-
-            child: DatePickerExample(
-              onDateSelected: _handleDateSelected,
-            ),
-          ),
-    // Ho utilizzato per il momento sized box (cfr widgedoftheweek per garantire la resa dei contenuti sulla Homepage
-  
-              
-              
+   /*           SizedBox(
+                width: 300.0,
+                height: 300.0,
+                child: DatePickerExample(
+                  onDateSelected: _handleDateSelected,
+                ),
+              ),
+              // Ho utilizzato per il momento sized box (cfr widgedoftheweek per garantire la resa dei contenuti sulla Homepage
+*/
               /*const Text(
                 'Datario',
                 style: TextStyle(
@@ -275,6 +351,7 @@ class _HomepageState extends State<Homepage> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // (da eliminare)
           // Clic sul floating button: andiamo ad incrementare il contatore facendo
           // riferimento a InheritedCounter, l'InheritedWidget che propaga il contatore
           // InheritedCounter.increase(context);
@@ -289,8 +366,10 @@ class _HomepageState extends State<Homepage> {
       //drawer: const MyDrawer(),
     );
   }
-   void _openPopupWindow() {
-    showDialog(    //documenta showDialog di Dialog
+
+  void _openPopupWindow() {
+    showDialog(
+      //documenta showDialog di Dialog
       context: context,
       builder: (BuildContext context) {
         return PopupWindow(
@@ -303,8 +382,9 @@ class _HomepageState extends State<Homepage> {
         );
       },
     );
-  } 
+  }
 }
+
 class PopupWindow extends StatefulWidget {
   final Function onDone; //definizione di onDone
 
@@ -316,7 +396,8 @@ class PopupWindow extends StatefulWidget {
 
 class _PopupWindowState extends State<PopupWindow> {
   final _formKey = GlobalKey<FormState>();
-  final _textField1Controller = TextEditingController(); //creo due TextEditingController
+  final _textField1Controller =
+      TextEditingController(); //creo due TextEditingController
   final _textField2Controller = TextEditingController();
   late bool _passwordVisibility;
   @override
@@ -324,13 +405,14 @@ class _PopupWindowState extends State<PopupWindow> {
     super.initState();
     _passwordVisibility = false;
   }
+
   void _done() {
     if (_formKey.currentState!.validate()) {
       widget.onDone(
         _textField1Controller.text,
         _textField2Controller.text,
       );
-     Navigator.pop(context);
+      Navigator.pop(context);
     }
   }
 
@@ -346,21 +428,21 @@ class _PopupWindowState extends State<PopupWindow> {
             TextFormField(
               controller: _textField1Controller,
               validator: (value) {
-                if (value!.trim().isEmpty) { /*copiata riga 64*/
+                if (value!.trim().isEmpty) {
+                  /*copiata riga 64*/
                   return 'Please enter some text';
                 }
-               
 
                 return null;
               },
               decoration: InputDecoration(
-        labelText: "Username",
-        hintText: "Please enter your username",
-        icon: new Icon(
-          Icons.engineering,
-          color: Colors.grey,
-        ),
-      ),
+                labelText: "Username",
+                hintText: "Please enter your username",
+                icon: new Icon(
+                  Icons.engineering,
+                  color: Colors.grey,
+                ),
+              ),
             ),
             TextFormField(
               controller: _textField2Controller,
@@ -368,30 +450,32 @@ class _PopupWindowState extends State<PopupWindow> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
                 }
-                 if (!_passwordValidationCriteria(value)) {
-          return "The password you entered doesn't meet one or more of the following criteria: 1 upper case character, 1 lower case character, 1 numeric character, 1 special character (\!, \@, \#, \$, \&, \*, \~)";
+                if (!_passwordValidationCriteria(value)) {
+                  return "The password you entered doesn't meet one or more of the following criteria: 1 upper case character, 1 lower case character, 1 numeric character, 1 special character (\!, \@, \#, \$, \&, \*, \~)";
                 }
                 return null;
               },
-               decoration: InputDecoration(
-        labelText: "Password",
-        hintText: "Please enter your password",
-        icon: new Icon(
-          Icons.lock,
-          color: Colors.grey,
-        ),
-        suffixIcon: IconButton(
-          icon: Icon(
-            !_passwordVisibility ? Icons.visibility : Icons.visibility_off,
-            color: Colors.grey,
-          ),
-          onPressed: () {
-            setState(() {
-              _passwordVisibility = !_passwordVisibility;
-            });
-          },
-        ),
-      ),
+              decoration: InputDecoration(
+                labelText: "Password",
+                hintText: "Please enter your password",
+                icon: new Icon(
+                  Icons.lock,
+                  color: Colors.grey,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    !_passwordVisibility
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisibility = !_passwordVisibility;
+                    });
+                  },
+                ),
+              ),
             ),
           ],
         ),
@@ -404,21 +488,18 @@ class _PopupWindowState extends State<PopupWindow> {
       ],
     );
   }
+}
 
-  }
-  /*copio _passwordValisdationCriteria()*/
-  bool _passwordValidationCriteria(String value) {
-    String pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-    RegExp regExp = new RegExp(pattern);
-    return regExp.hasMatch(value);
-  }
-  
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+/*copio _passwordValisdationCriteria()*/
+bool _passwordValidationCriteria(String value) {
+  String pattern =
+      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+  RegExp regExp = new RegExp(pattern);
+  return regExp.hasMatch(value);
+}
 
-
-
+@override
+State<StatefulWidget> createState() {
+  // TODO: implement createState
+  throw UnimplementedError();
+}
