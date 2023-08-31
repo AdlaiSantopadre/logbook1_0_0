@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';//per utilizare DateTime
 import 'package:logbook1_0_0/pages/pageEquipaggiamento.dart';
 import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
 import 'package:logbook1_0_0/pages/pageVeicolo.dart';
-import 'package:logbook1_0_0/components/DatePickerExemple.dart';
+
 import 'package:logbook1_0_0/pages/pageDPI.dart';
 //import 'package:login_flutter_app/pages/login.dart';
 
@@ -30,8 +30,8 @@ class _LogbookAppState extends State<LogbookApp> {
     Then you can add the Center widget directly to the body property for the home page.*/
         title: 'Logbook HomePage',
         debugShowCheckedModeBanner: true, //mostra il banner debug mode
-        theme: ThemeData(
-            primarySwatch: Colors.cyan, canvasColor: Colors.cyan[100]),
+        /*theme: ThemeData(
+            primarySwatch: Colors.cyan, canvasColor: Colors.cyan[100]),*/
         home: Homepage()); //Chiamata a HomePage home della navigazione
   }
 }
@@ -41,53 +41,54 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
-
-
 class _HomepageState extends State<Homepage> {
-  String? _username;
+  String? _username = '.....';
   String? _password;
   DateTime fixDate = DateTime.now();
   FocusNode nextFocus = FocusNode();
+  String formattedDate = DateFormat('dd-MM-yyyy ').format(DateTime.now());
+
 //devi aggiungere un TextEditingController
 // Create a text controller and use it to retrieve the current value
 // of the TextField.
-final dataController = TextEditingController();
+  final dataController = TextEditingController();
 
-@override
-void dispose() {
-  // Clean up the controller when the widget is disposed.
-  dataController.dispose();
-  super.dispose();
-}
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    dataController.dispose();
+    super.dispose();
+  }
+
   var restorableDatePickerRouteFuture;
   //List per gestire la navigazione nel drawer
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  /*static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);*/
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
-      style: optionStyle,
+      //  style: optionStyle,
     ),
     Text(
       'Index 1: Veicolo',
-      style: optionStyle,
+      //  style: optionStyle,
     ),
     Text(
       'Index 2: Equipaggiamento',
-      style: optionStyle,
+      //  style: optionStyle,
     ),
     Text(
       'Index 3: DPI',
-      style: optionStyle,
+      //  style: optionStyle,
     ),
     Text(
       'Index 4: Primo soccorso',
-      style: optionStyle,
+      //  style: optionStyle,
     ),
     Text(
       'Index 5: Dotazioni Antincendio',
-      style: optionStyle,
+      // style: optionStyle,
     ),
   ];
 
@@ -100,9 +101,10 @@ void dispose() {
   @override
   Widget build(BuildContext context) {
     debugPrint('Building $runtimeType');
+
     return Scaffold(
       //Creo un visual scaffold con appbar e floatingActionButton e drawer
-
+//DRAWER DRAWER //
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -114,7 +116,7 @@ void dispose() {
             DrawerHeader(
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: Colors.cyan,
+                color: Colors.cyan.shade100,
               ),
               child: Center(
                   child: Image.asset(
@@ -222,16 +224,20 @@ void dispose() {
           ],
         ),
       ),
+      /*DRAWER DRAWER*/
+  /*APPBARAPPBAR*/
       appBar: AppBar(
         flexibleSpace: Image.asset('lib/assets/B1logo.png'),
+        titleSpacing: 0.0,
         title: const Text(
           "Diario di bordo",
+          
           style: TextStyle(
-            color: Colors.black,
+            color: Color.fromARGB(255, 227, 242, 253),
             fontWeight: FontWeight.w800,
             fontFamily: 'Roboto',
             letterSpacing: 0.5,
-            fontSize: 14,
+            fontSize: 18,
           ),
         ),
         /*actions: [
@@ -243,6 +249,7 @@ void dispose() {
               },
               icon: const Icon(Icons.change_circle_outlined)),
         ],*/
+  /*APPBARAPPBAR*/
       ),
       /* body: Consumer(
         builder: (context, ref, child) {
@@ -254,58 +261,80 @@ void dispose() {
 
           return child!;
         },*/
+//BODYBODY//
       body: Center(
         child: Container(
           padding: EdgeInsets.all(8.0),
           child: Column(
             verticalDirection: VerticalDirection.down,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // (show ListTile index number , name)  _widgetOptions[_selectedIndex],         _widgetOptions[_selectedIndex],
-                              
-                TextField(
-                  style: TextStyle(fontSize: 10),
-                  controller: dataController, //[index][0],
-                  decoration: InputDecoration(hintText: 'Seleziona la Data'),
-                  
-                  onTap: () async {
-                    // Show date picker
-                    final pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: fixDate,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101),
-                    );
 
-                    if (pickedDate != null) {
-                      /* Show time picker
-                  final pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: selectedInitTime,
-                  );*/
-
-                      // if (pickedTime != null) {
-
-                      setState(() {
-                        fixDate = DateTime(
-                          pickedDate.year,
-                          pickedDate.month,
-                          pickedDate.day,
-                          //pickedTime.hour,
-                          //pickedTime.minute,
+              Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                    
+                    border: Border.all(
+                      color: Colors.blue,
+                      width: 3,
+                      
+                    ),
+                    borderRadius: BorderRadius.circular(12)),
+                child: TextField(
+                    //autofocus: true,
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                    controller: dataController,
+                     //[index][0],
+                    
+                    decoration: InputDecoration(
+                      //hintText: 'percorrenze di',
+                      border: InputBorder.none, 
+                      suffixIcon:Icon(Icons.calendar_today),//spostare onTap sulla Icona
+                      labelText:  'Data di oggi $formattedDate'
+                     ),
+                    onTap: () async {
+                      // Show date picker
+                      final pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: fixDate,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      
+                        setState(() {
+                          //controllers[index][0].text = selectedDate.toString();
+                          String formattedDate =
+                              DateFormat('dd-MM-yyyy ').format(fixDate);
+                          dataController.text = formattedDate;
+                          //FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                        }
                         );
-                        //controllers[index][0].text = selectedDate.toString();
-                        String formattedDate =
-                            DateFormat('dd-MM-yyyy ').format(fixDate);
-                        dataController.text = formattedDate;
-                        FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
-                      });
-                      // }
-                    }
-                  },
-                ),
-             
+                      
+
+                      if (pickedDate != null) {
+                        setState(() {
+                          fixDate = DateTime(
+                            pickedDate.year,
+                            pickedDate.month,
+                            pickedDate.day,
+                            //pickedTime.hour,
+                            //pickedTime.minute,
+                          );
+                          //controllers[index][0].text = selectedDate.toString();
+                          String formattedDate =
+                              DateFormat('dd-MM-yyyy ').format(fixDate);
+                          dataController.text = formattedDate;
+                          FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                        });
+                        // }
+                      };
+                      
+                    }),
+              ),
+
               /* OutlinedButton(
           onPressed: () {
             restorableDatePickerRouteFuture.present();
@@ -313,7 +342,7 @@ void dispose() {
           child: const Text('Open Date Picker'),
         
           ),*/
-   /*           SizedBox(
+              /*           SizedBox(
                 width: 300.0,
                 height: 300.0,
                 child: DatePickerExample(
@@ -334,21 +363,62 @@ void dispose() {
               ),*/
 
               //inserire qui il widget per il la autenticazione
-              ElevatedButton(
-                onPressed: _openPopupWindow,
-                child: Text('Open Popup Window'),
+              Container(
+                
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.blue,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.circular(12)),
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: _openPopupWindow,
+                      child: Text('Autenticazione richiesta'),
+                    ),
+                  
+              
+                Container(
+                  padding: EdgeInsets.all(8.0),
+                  
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Username: $_username',
+                            style: TextStyle(fontSize: 14)),
+                    ],
+                  ),
+                  
+                  decoration: BoxDecoration(
+                    
+                    border: Border.all(width: 4,color: Colors.blue),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              
+                /* Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Password: $_password',
+                      style: TextStyle(fontSize: 14)),
+                  decoration: BoxDecoration(
+                    
+                    border: Border.all(width: 4,color: Colors.blue),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),*/
+                ],
+                ),
               ),
-              Text('Username: $_username'),
-              Text('Password: $_password'),
 
               const Text(' White Space            '),
               const Text('indicatore di progresso'),
               const Text('lista scadenze'),
-            ],
-          ),
+            ],),
         ),
       ),
-
+      //BODYBODY//
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // (da eliminare)
@@ -397,9 +467,10 @@ class PopupWindow extends StatefulWidget {
 class _PopupWindowState extends State<PopupWindow> {
   final _formKey = GlobalKey<FormState>();
   final _textField1Controller =
-      TextEditingController(); //creo due TextEditingController
+      TextEditingController() ; //creo due TextEditingController
   final _textField2Controller = TextEditingController();
   late bool _passwordVisibility;
+  
   @override
   void initState() {
     super.initState();
@@ -419,7 +490,7 @@ class _PopupWindowState extends State<PopupWindow> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Ma tu chi sei?'),
+      title: Text(''),
       content: Form(
         key: _formKey,
         child: Column(
