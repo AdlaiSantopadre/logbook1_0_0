@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
-import 'package:intl/intl.dart';//per utilizare DateTime
+import 'package:intl/intl.dart'; //per utilizare DateTime
 import 'package:logbook1_0_0/pages/pageEquipaggiamento.dart';
 import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
 import 'package:logbook1_0_0/pages/pageVeicolo.dart';
@@ -48,8 +48,7 @@ class _HomepageState extends State<Homepage> {
   FocusNode nextFocus = FocusNode();
   String formattedDate = DateFormat('dd-MM-yyyy ').format(DateTime.now());
 
-//devi aggiungere un TextEditingController
-// Create a text controller and use it to retrieve the current value
+//devi aggiungere un TextEditingController;Create a text controller and use it to retrieve the current value
 // of the TextField.
   final dataController = TextEditingController();
 
@@ -225,13 +224,12 @@ class _HomepageState extends State<Homepage> {
         ),
       ),
       /*DRAWER DRAWER*/
-  /*APPBARAPPBAR*/
+      /*APPBARAPPBAR*/
       appBar: AppBar(
         flexibleSpace: Image.asset('lib/assets/B1logo.png'),
         titleSpacing: 0.0,
         title: const Text(
           "Diario di bordo",
-          
           style: TextStyle(
             color: Color.fromARGB(255, 227, 242, 253),
             fontWeight: FontWeight.w800,
@@ -249,7 +247,7 @@ class _HomepageState extends State<Homepage> {
               },
               icon: const Icon(Icons.change_circle_outlined)),
         ],*/
-  /*APPBARAPPBAR*/
+        /*APPBARAPPBAR*/
       ),
       /* body: Consumer(
         builder: (context, ref, child) {
@@ -275,11 +273,9 @@ class _HomepageState extends State<Homepage> {
               Container(
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                    
                     border: Border.all(
                       color: Colors.blue,
                       width: 3,
-                      
                     ),
                     borderRadius: BorderRadius.circular(12)),
                 child: TextField(
@@ -287,14 +283,14 @@ class _HomepageState extends State<Homepage> {
                     style: TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                     controller: dataController,
-                     //[index][0],
-                    
+                    //[index][0],
+
                     decoration: InputDecoration(
-                      //hintText: 'percorrenze di',
-                      border: InputBorder.none, 
-                      suffixIcon:Icon(Icons.calendar_today),//spostare onTap sulla Icona
-                      labelText:  'Data di oggi $formattedDate'
-                     ),
+                        //hintText: 'percorrenze di',
+                        border: InputBorder.none,
+                        suffixIcon: Icon(
+                            Icons.calendar_today), //spostare onTap sulla Icona
+                        labelText: 'Data di oggi $formattedDate'),
                     onTap: () async {
                       // Show date picker
                       final pickedDate = await showDatePicker(
@@ -303,16 +299,14 @@ class _HomepageState extends State<Homepage> {
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2101),
                       );
-                      
-                        setState(() {
-                          //controllers[index][0].text = selectedDate.toString();
-                          String formattedDate =
-                              DateFormat('dd-MM-yyyy ').format(fixDate);
-                          dataController.text = formattedDate;
-                          //FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
-                        }
-                        );
-                      
+
+                      setState(() {
+                        //controllers[index][0].text = selectedDate.toString();
+                        String formattedDate =
+                            DateFormat('dd-MM-yyyy ').format(fixDate);
+                        dataController.text = formattedDate;
+                        //FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                      });
 
                       if (pickedDate != null) {
                         setState(() {
@@ -327,11 +321,12 @@ class _HomepageState extends State<Homepage> {
                           String formattedDate =
                               DateFormat('dd-MM-yyyy ').format(fixDate);
                           dataController.text = formattedDate;
-                          FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                          FocusScope.of(context).requestFocus(
+                              nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
                         });
                         // }
-                      };
-                      
+                      }
+                      ;
                     }),
               ),
 
@@ -364,7 +359,6 @@ class _HomepageState extends State<Homepage> {
 
               //inserire qui il widget per il la autenticazione
               Container(
-                
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                     border: Border.all(
@@ -378,27 +372,22 @@ class _HomepageState extends State<Homepage> {
                       onPressed: _openPopupWindow,
                       child: Text('Autenticazione richiesta'),
                     ),
-                  
-              
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Username: $_username',
-                            style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                  
-                  decoration: BoxDecoration(
-                    
-                    border: Border.all(width: 4,color: Colors.blue),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              
-                /* Container(
+                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Username: $_username',
+                              style: TextStyle(fontSize: 14)),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 4, color: Colors.blue),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+
+                    /* Container(
                   padding: EdgeInsets.all(8.0),
                   child: Text('Password: $_password',
                       style: TextStyle(fontSize: 14)),
@@ -408,14 +397,15 @@ class _HomepageState extends State<Homepage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),*/
-                ],
+                  ],
                 ),
               ),
 
               const Text(' White Space            '),
               const Text('indicatore di progresso'),
               const Text('lista scadenze'),
-            ],),
+            ],
+          ),
         ),
       ),
       //BODYBODY//
@@ -467,10 +457,10 @@ class PopupWindow extends StatefulWidget {
 class _PopupWindowState extends State<PopupWindow> {
   final _formKey = GlobalKey<FormState>();
   final _textField1Controller =
-      TextEditingController() ; //creo due TextEditingController
+      TextEditingController(); //creo due TextEditingController
   final _textField2Controller = TextEditingController();
   late bool _passwordVisibility;
-  
+
   @override
   void initState() {
     super.initState();

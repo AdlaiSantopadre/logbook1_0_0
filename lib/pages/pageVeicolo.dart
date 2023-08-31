@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +11,7 @@ class PageVeicolo extends StatefulWidget {
 class _PageVeicoloState extends State<PageVeicolo> {
 //Registro Annotazioni e Percorrenze Veicolo
 
-  
+  TextEditingController mese = TextEditingController();
   List<List<TextEditingController>> controllers = [];
   FocusNode nextFocus = FocusNode();
   bool canAddRow = false;
@@ -23,16 +22,12 @@ class _PageVeicoloState extends State<PageVeicolo> {
   @override
   void initState() {
     super.initState();
-    addNewRow( );
-    }
-
-
-
-
+    addNewRow();
+  }
 
   void addNewRow() {
     setState(() {
-     controllers.add([
+      controllers.add([
         TextEditingController(),
         TextEditingController(),
         TextEditingController(),
@@ -43,7 +38,8 @@ class _PageVeicoloState extends State<PageVeicolo> {
       updateCanAddRow();
     });
   }
- @override
+
+  @override
   void dispose() {
     for (var controllerList in controllers) {
       for (var controller in controllerList) {
@@ -52,23 +48,42 @@ class _PageVeicoloState extends State<PageVeicolo> {
     }
     super.dispose();
   }
- void updateCanAddRow() {
+
+  void updateCanAddRow() {
     canAddRow = controllers.isNotEmpty &&
         controllers.last.every((controller) => controller.text.isNotEmpty);
   }
-   void addRow() {
+
+  void addRow() {
     if (canAddRow) {
       setState(() {
         addNewRow();
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Table Example')),
-      body: Column(
-        children: [
+        appBar: AppBar(title: Text("Rapporto Percorrenze")),
+        body: Column(children: [
+          Row(children: [
+            Text("AUTOSTRADE// per l'Italia"),
+            Text("Direzione VII Tronco"),
+          ]),
+          Row(children: [
+            Expanded(
+              child: TextField(
+                style: TextStyle(fontSize: 10),
+                controller: mese,
+                //focusNode: nextFocus,
+                decoration: InputDecoration(
+                  hintText: 'Mese di',
+                  prefixText: "Mese di",
+                ),
+              ),
+            )
+          ]),
           const Row(
             children: [
               Expanded(child: Text('DataOra')),
@@ -80,174 +95,191 @@ class _PageVeicoloState extends State<PageVeicolo> {
             ],
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: controllers.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Row(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Column(
+                children: List.generate(controllers.length, (index) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    /*Expanded(
+                  child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Column(
+                  children: List.generate(controllers.length, (index) {
+                  return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,*/
+
+                    child: Row(
                       children: [
-              Expanded(
-                      child: TextField(
-                        
-                        style:TextStyle(fontSize:10 ),
-                        controller: controllers[index][0],
-                        decoration: InputDecoration(hintText: 'DataOra'),
-                        onTap: () async {
-                    // Show date picker
-                    final pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: selectedInitDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101),
-                    );
+                        Expanded(
+                          child: TextField(
+                            style: TextStyle(fontSize: 14),
+                            controller: controllers[index][0],
+                            decoration: InputDecoration(hintText: 'DataOra'),
+                            onTap: () async {
+                              // Show date picker
+                              final pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: selectedInitDate,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101),
+                              );
 
-                if (pickedDate != null) {
-                  // Show time picker
-                  final pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: selectedInitTime,
+                              if (pickedDate != null) {
+                                // Show time picker
+                                final pickedTime = await showTimePicker(
+                                  context: context,
+                                  initialTime: selectedInitTime,
+                                );
+
+                                if (pickedTime != null) {
+                                  setState(() {
+                                    selectedInitDate = DateTime(
+                                      pickedDate.year,
+                                      pickedDate.month,
+                                      pickedDate.day,
+                                      pickedTime.hour,
+                                      pickedTime.minute,
+                                    );
+                                    //controllers[index][0].text = selectedDate.toString();
+                                    String formattedDate =
+                                        DateFormat('yyyy-MM-dd HH:mm')
+                                            .format(selectedInitDate);
+                                    controllers[index][0].text = formattedDate;
+                                  });
+                                }
+                              }
+                            },
+                            onChanged: (value) {
+                              updateCanAddRow();
+                            },
+                            onEditingComplete: () {
+                              FocusScope.of(context).requestFocus(nextFocus);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: controllers[index][1],
+                            //focusNode: nextFocus,
+                            decoration: InputDecoration(hintText: 'Enter data'),
+                            onChanged: (value) {
+                              updateCanAddRow();
+                            },
+                            onEditingComplete: () {
+                              FocusScope.of(context).requestFocus(nextFocus);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            style: TextStyle(fontSize: 14),
+                            controller: controllers[index][2],
+                            //focusNode: nextFocus,
+                            decoration: InputDecoration(hintText: 'Enter data'),
+                            onTap: () async {
+                              // Show date picker
+                              final pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: selectedEndDate,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101),
+                              );
+
+                              if (pickedDate != null) {
+                                // Show time picker
+                                final pickedTime = await showTimePicker(
+                                  context: context,
+                                  initialTime: selectedEndTime,
+                                );
+
+                                if (pickedTime != null) {
+                                  setState(() {
+                                    selectedEndDate = DateTime(
+                                      pickedDate.year,
+                                      pickedDate.month,
+                                      pickedDate.day,
+                                      pickedTime.hour,
+                                      pickedTime.minute,
+                                    );
+                                    //controllers[index][0].text = selectedDate.toString();
+                                    String formattedDate =
+                                        DateFormat('DD-MM-yy HH:mm')
+                                            .format(selectedEndDate);
+                                    controllers[index][2].text = formattedDate;
+                                  });
+                                }
+                              }
+                            },
+                            onChanged: (value) {
+                              updateCanAddRow();
+                            },
+                            onEditingComplete: () {
+                              FocusScope.of(context).requestFocus(nextFocus);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            style: TextStyle(fontSize: 14),
+                            controller: controllers[index][3],
+                            //focusNode: nextFocus,
+                            decoration: InputDecoration(hintText: 'Enter data'),
+                            onChanged: (value) {
+                              updateCanAddRow();
+                            },
+                            onEditingComplete: () {
+                              FocusScope.of(context).requestFocus(nextFocus);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            style: TextStyle(fontSize: 14),
+                            //maxLines: 2,//2 scrollabale linesrr
+                            controller: controllers[index][4],
+                            //focusNode: nextFocus,
+                            decoration: InputDecoration(hintText: '...'),
+                            onChanged: (value) {
+                              updateCanAddRow();
+                            },
+                            onEditingComplete: () {
+                              FocusScope.of(context).requestFocus(nextFocus);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: controllers[index][5],
+                            //focusNode: nextFocus,
+                            decoration: InputDecoration(hintText: 'Enter data'),
+
+                            onChanged: (value) {
+                              updateCanAddRow();
+                            },
+                            onEditingComplete: () {
+                              addRow();
+                              //FocusScope.of(context).requestFocus(nextFocus);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   );
-
-                if (pickedTime != null) {
-                    
-                    setState(() {
-                      selectedInitDate = DateTime(
-                        pickedDate.year,
-                        pickedDate.month,
-                        pickedDate.day,
-                        pickedTime.hour,
-                        pickedTime.minute,
-                      );
-                      //controllers[index][0].text = selectedDate.toString();
-                      String formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(selectedInitDate);
-                      controllers[index][0].text = formattedDate;
-                    });
-                  }
-                }
-                },
-                          onChanged: (value) {
-                            updateCanAddRow();},
-                          onEditingComplete: () {
-                          FocusScope.of(context).requestFocus(nextFocus);
-                        },                     
-                      ),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: controllers[index][1],
-                        //focusNode: nextFocus,
-                        decoration: InputDecoration(hintText: 'Enter data'),
-                        onChanged: (value) {
-                          updateCanAddRow();},
-                        onEditingComplete: () {
-                         FocusScope.of(context).requestFocus(nextFocus);
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        style:TextStyle(fontSize:10 ),
-                        controller: controllers[index][2],
-                        //focusNode: nextFocus,
-                        decoration: InputDecoration(hintText: 'Enter data'),
-                                                onTap: () async {
-                   // Show date picker
-                   final pickedDate = await showDatePicker(                 
-                     context: context,
-                      initialDate: selectedEndDate,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101),
-                   );
-
-                   if (pickedDate != null) {
-                  // Show time picker
-                      final pickedTime = await showTimePicker(
-                     context: context,
-                     initialTime: selectedEndTime,
-                  );
-
-                  if (pickedTime != null) {
-                    
-                    setState(() {
-                      selectedEndDate = DateTime(
-                        pickedDate.year,
-                        pickedDate.month,
-                        pickedDate.day,
-                        pickedTime.hour,
-                        pickedTime.minute,
-                      );
-                      //controllers[index][0].text = selectedDate.toString();
-                      String formattedDate = DateFormat('DD-MM-yy HH:mm').format(selectedEndDate);
-                      controllers[index][2].text = formattedDate;
-                    });
-                  }
-                }
-              }, onChanged: (value) {
-                          updateCanAddRow();},
-                        onEditingComplete: () {
-                          FocusScope.of(context).requestFocus(nextFocus);
-                        },
-                        
-                      ),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        //style:TextStyle(fontSize:10 ),
-                        controller: controllers[index][3],
-                        //focusNode: nextFocus,
-                        decoration: InputDecoration(hintText: 'Enter data'),
-                        onChanged: (value) {
-                          updateCanAddRow();},
-                        onEditingComplete: () {
-                         FocusScope.of(context).requestFocus(nextFocus);
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        style:TextStyle(fontSize:10 ),
-                        maxLines: 2,//2 scrollabale linesrr
-                        controller: controllers[index][4],
-                        //focusNode: nextFocus,
-                        decoration: InputDecoration(hintText: '...'),
-                        onChanged: (value) {
-                          updateCanAddRow();},
-                        onEditingComplete: () {
-                          FocusScope.of(context).requestFocus(nextFocus);
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: controllers[index][5],
-                        //focusNode: nextFocus,
-                        decoration: InputDecoration(hintText: 'Enter data'),
-                        
-                        onChanged: (value) {
-                          updateCanAddRow();},
-                        onEditingComplete: () {
-                        addRow();
-                         //FocusScope.of(context).requestFocus(nextFocus);
-                        },
-                      ),
-                    ),
-                  ],
-                );
-              },
+                }),
+              ),
             ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          addRow();
-          
-        },
-        child: Icon(Icons.add),
-        backgroundColor: canAddRow ? Colors.blue : Colors.grey,
+        ]),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            addRow();
+          },
+          child: Icon(Icons.add),
+          backgroundColor: canAddRow ? Colors.blue : Colors.grey,
 
-        // Disable the button when the last row is not fully filled
-        // with data in all columns),
-      ),
-    );
+          // Disable the button when the last row is not fully filled
+          // with data in all columns),
+        ));
   }
 }
