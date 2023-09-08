@@ -1,8 +1,89 @@
 import 'package:flutter/material.dart';
 
+
+
 /// Flutter code sample for [showDatePicker].
 
-void main() => runApp(const DatePickerApp());
+void main() {
+  runApp(MaterialApp(
+    home: DatePickerApp(),
+  ));}
+class DatePickerApp extends StatefulWidget {
+  @override
+  _DatePickerAppState createState() => _DatePickerAppState();
+}
+
+class _DatePickerAppState extends State<DatePickerApp> {
+  DateTime? selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Date Picker App'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            selectedDate != null
+                ? Text(
+                    'Selected Date: ${selectedDate!.toLocal()}'.split(' ')[0],
+                    style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+                  )
+                : Text(
+                    'Select a Date',
+                    style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+                  ),
+            SizedBox(
+              height: 20.0,
+            ),
+            ElevatedButton(
+              onPressed: () => _selectDate(context),
+              child: Text('Select date'),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            TextField(
+              controller: TextEditingController(
+                text: selectedDate != null
+                    ? '${selectedDate!.toLocal()}'.split(' ')[0]
+                    : '',
+              ),
+              readOnly: true, // Prevent manual editing
+              decoration: InputDecoration(
+                labelText: 'Selected Date',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+/*
+void main() {
+  runApp(MaterialApp(
+    home: DatePickerApp(),
+  ));
+}
+
 
 class DatePickerApp extends StatelessWidget {
   const DatePickerApp({super.key});
@@ -12,24 +93,24 @@ class DatePickerApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
       restorationScopeId: 'app',
-      home: const DatePickerExample(restorationId: 'main'),
+      home: const DatePickerApp(restorationId: 'main'),
     );
   }
 }
 
-class DatePickerExample extends StatefulWidget {
-  const DatePickerExample({super.key, this.restorationId});
+class DatePickerApp extends StatefulWidget {
+  const DatePickerApp({super.key, this.restorationId});
 
   final String? restorationId;
 
   @override
-  State<DatePickerExample> createState() => _DatePickerExampleState();
+  State<DatePickerApp> createState() => _DatePickerAppState();
 }
 
 /// RestorationProperty objects can be used because of RestorationMixin.
-class _DatePickerExampleState extends State<DatePickerExample>
+class _DatePickerAppState extends State<DatePickerApp>
     with RestorationMixin {
-  // In this example, the restoration ID for the mixin is passed in through
+  // In this App, the restoration ID for the mixin is passed in through
   // the [StatefulWidget]'s constructor.
   @override
   String? get restorationId => widget.restorationId;
@@ -98,4 +179,4 @@ class _DatePickerExampleState extends State<DatePickerExample>
       ),
     );
   }
-}
+}*/

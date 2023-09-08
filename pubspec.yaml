@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.4 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,6 +31,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  path_provider: ^2.0.14
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,8 +40,10 @@ dependencies:
 
   #in order to enable state restoration
   provider: ^5.0.0
-  flutter_hooks: ^0.18.0
-  intl: ^0.17.0 #in order to add the intl package
+  flutter_hooks: ^0.20.1
+  intl: ^0.18.0 #in order to add the intl package
+  autocomplete_textfield: ^2.0.0 
+
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +54,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
