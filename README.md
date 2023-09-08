@@ -1,18 +1,3 @@
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 ### logbook filosofia della App
 *To make as easy as possible the start of the working day..*<br>
 Prima di iniziare la specifica attività lavorativa (ad es. la manutenzione programmata su un impianto *in itinere*), ogni giorno devo ottemperare a tutta una serie di piccole attività iniziali ( compiti per lo più di verifica e controllo degli equipaggiamenti e dell'autoveicolo che andrò ad utilizzare).<br> 
