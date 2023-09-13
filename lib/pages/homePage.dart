@@ -1,125 +1,97 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
 import 'package:intl/intl.dart'; //per utilizare DateTime
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-
-import  'package:logbook1_0_0/pages/homePage.dart';
+import 'package:flutter_hooks/flutter_hooks.dart'; //https://medium.com/@CavinMac/mastering-hooks-in-flutter-dca896d97d47#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjdjMGI2OTEzZmUxMzgyMGEzMzMzOTlhY2U0MjZlNzA1MzVhOWEwYmYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDA4NjEzNTM1ODEyNTQzNzQ5ODAiLCJlbWFpbCI6ImFkaWVnaXVsaUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNjk0NTE2MTkzLCJuYW1lIjoiQWRsYWkgUyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKWlRZN3pRWXBscmJNMkVaTlFDaWNiTm4xLWhjZVdtdUVwR1NTUVV5d2syYURQPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkFkbGFpIiwiZmFtaWx5X25hbWUiOiJTIiwibG9jYWxlIjoiaXQiLCJpYXQiOjE2OTQ1MTY0OTMsImV4cCI6MTY5NDUyMDA5MywianRpIjoiMTRlYzljMjU1ZmNlM2UxYjgwMDMyMjAwNDkxZGM5YWYxNzhlOTM4YyJ9.T64Qpd3eqsBFwGjYGGE8aeMXb-De-2U5vcQ2TEDoe0BLLGvCrRkm57KiPZ4wgPJFJjBzjvrguDz0x6lBFmUmFdRSWcXkM2t81FPCEsc1IXbeUDwoO-TjVar1AdFDx2kLpeLNfLVjY-DqalHZM3EJD21GDyeqlq473i00HFoQTW1CTfS1C-FQ_NeMV_pgzkzj0sLBB52Evdl7iXPleuy2hfCrVeimn1BEiZsD_yhHosrUyOXZtTmQ_zi9X3nnNMT1i5QG2dRFI-Amthkj466g00vxK9PPnE-DFV45lyrDTzFCWrmpn0uW1QUTmPa4jO7odCwoRl6YPYV6oesjinvNSg
+import 'package:logbook1_0_0/pages/pageDotazioniAntincendio.dart';
 import 'package:logbook1_0_0/pages/pageEquipaggiamento.dart';
 import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
 import 'package:logbook1_0_0/pages/pageVeicolo.dart';
 import 'package:logbook1_0_0/pages/pageDPI.dart';
 import 'package:logbook1_0_0/models/progressIndicator.dart';
+import 'package:logbook1_0_0/widgets/PopupWindow';
+import 'package:logbook1_0_0/providers.dart';
 
-void main() =>
-    runApp( const ProviderScope(child:LogbookApp()));
-
-//All Flutter applications using Riverpod must contain a [ProviderScope] at the root of their widget tree
-/*void main() {
-  runApp(
-    ProviderScope(
-      child: MyApp(),
-    ),
-  );
-}*/
-
-//**MyApp is  LogbookApp**//
-class LogbookApp extends StatelessWidget {
-  const LogbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        /*For a Material app, you can use a Scaffold widget;
-     it provides a default banner, background color, and has API for adding drawers, snack bars, and bottom sheets. 
-    Then you can add the Center widget directly to the body property for the home page.*/
-        title: 'Logbook HomePage',
-        debugShowCheckedModeBanner: true, //mostra il banner debug mode
-        /*theme: ThemeData(
-            primarySwatch: Colors.cyan, canvasColor: Colors.cyan[100]),*/
-        home: HomePage()); //Chiamata a HomePage home della navigazione
-  }
-}
-
-/* 
-class HomePage extends StatefulWidget {
-  
-
-  
+/*class HomePage extends StatefulWidget { 
   @override
   State <HomePage> createState() =>  HomePageState();
-}
-
-class  HomePageState extends State <HomePage> {
-  @override
-  
- //REfactor Home
+}*/
+/*see reiverpod.dev
+ConsumerWidget is identical in use to StatelessWidget, with the only difference 
+being that it has an extra parameter on its build method: the "ref" object.*/
+class HomePage extends HookConsumerWidget {
+  HomePage({Key? key}) : super(key: key);
 
 // ignore: must_be_immutable
 
-  
-  String? _username = '.....';
-  String? _password;
+  //String? _username = '.....';
+  // String? _password;
   DateTime fixDate = DateTime.now();
   FocusNode nextFocus = FocusNode();
   String formattedDate = DateFormat('dd-MM-yyyy ').format(DateTime.now());
-  final totalProgressProvider = StateProvider<int>((ref) => 0);
 
+//  int selectedIndex = 0;
+
+  // final dataController = TextEditingController();
 //devi aggiungere un TextEditingController;Create a text controller and use it to retrieve the current value
 // of the TextField.
-  final dataController = TextEditingController();
-
-
-  void dispose() {
+/*void dispose() {
     // Clean up the controller when the widget is disposed.
-    dataController.dispose();
-    
-  }
+    dataController.dispose();  
+                }*/
+// dispose gestito da riverpod
 
- 
   //List per gestire la navigazione nel drawer
-  int _selectedIndex = 0;
+
   /*static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);*/
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      //  style: optionStyle,
-    ),
-    Text(
-      'Index 1: Veicolo',
-      //  style: optionStyle,
-    ),
-    Text(
-      'Index 2: Equipaggiamento',
-      //  style: optionStyle,
-    ),
-    Text(
-      'Index 3: DPI',
-      //  style: optionStyle,
-    ),
-    Text(
-      'Index 4: Primo soccorso',
-      //  style: optionStyle,
-    ),
-    Text(
-      'Index 5: Dotazioni Antincendio',
-      // style: optionStyle,
-    ),
-  ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  /*elenco opzioni di scelta
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text( 'Index 0: Home',
+      //  style: optionStyle,
+    ),
+    Text('Index 1: Veicolo',
+      //  style: optionStyle,
+    ),
+    Text( 'Index 2: Equipaggiamento',
+      //  style: optionStyle,
+    ),
+    Text( 'Index 3: DPI',
+      //  style: optionStyle,
+    ),
+    Text('Index 4: Primo soccorso',
+      //  style: optionStyle,
+    ),
+    Text('Index 5: Dotazioni Antincendio',
+      // style: optionStyle,
+    ),];
+  
+*/ // (show ListTile index number , name)  _widgetOptions[_selectedIndex],
+  void _onItemTapped(int index, WidgetRef ref) {
+    ref.read(selectedIndexProvider.notifier).state = index;
   }
+
 //see reiverpod.dev
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('Building $runtimeType');
+    final totalProgress = ref.watch(totalProgressProvider);
+
+    final selectedIndex = ref
+        .watch(selectedIndexProvider); // Riverpod provider for selected index
+    var _username =  ref.watch(usernameProvider); // Riverpod provider for username
+       
+
+    final dateController =
+        useTextEditingController(); // Use hooks for TextEditingController
+
+    // final passwordVisibility = useState<bool>(false); // Use hooks for password visibility
+
+    final authentication = ref.watch(authenticationProvider);
 
     return Scaffold(
       //Creo un visual scaffold con appbar e floatingActionButton e drawer
-//DRAWER DRAWER //
+      ///DRAWER ///DRAWER //
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -131,7 +103,7 @@ class  HomePageState extends State <HomePage> {
             DrawerHeader(
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: Colors.cyan.shade100,
+                color: Colors.cyan[200],
               ),
               child: Center(
                   child: Image.asset(
@@ -139,10 +111,10 @@ class  HomePageState extends State <HomePage> {
             ),
             ListTile(
               title: const Text('Home'),
-              selected: _selectedIndex == 0,
+              selected: selectedIndex == 0,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(0);
+                _onItemTapped(0, ref);
                 // Then close the drawer
                 Navigator.pop(context);
               },
@@ -156,10 +128,10 @@ class  HomePageState extends State <HomePage> {
                 'Veicolo',
                 textAlign: TextAlign.center,
               ),
-              selected: _selectedIndex == 1,
+              selected: selectedIndex == 1,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(1);
+                _onItemTapped(1, ref);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const PageVeicolo()),
@@ -175,10 +147,10 @@ class  HomePageState extends State <HomePage> {
                 'PrimoSoccorso',
                 textAlign: TextAlign.center,
               ),
-              selected: _selectedIndex == 2,
+              selected: selectedIndex == 2,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(2);
+                _onItemTapped(2, ref);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -195,10 +167,10 @@ class  HomePageState extends State <HomePage> {
                 'Equipaggiamento',
                 textAlign: TextAlign.center,
               ),
-              selected: _selectedIndex == 3,
+              selected: selectedIndex == 3,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(3);
+                _onItemTapped(3, ref);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -215,10 +187,10 @@ class  HomePageState extends State <HomePage> {
                 'DPI',
                 textAlign: TextAlign.center,
               ),
-              selected: _selectedIndex == 4,
+              selected: selectedIndex == 4,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(5);
+                _onItemTapped(4, ref);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const PageDPI()),
@@ -227,43 +199,51 @@ class  HomePageState extends State <HomePage> {
             ),
             ListTile(
               title: const Text('Dotazioni Antincendio'),
-              selected: _selectedIndex == 5,
+              selected: selectedIndex == 5,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(5);
-                // Then close the drawer
-                Navigator.pop(context);
+                _onItemTapped(5, ref);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PageDotazioniAntincendio()),
+                );
               },
             ),
-            // (show ListTile index number , name)  _widgetOptions[_selectedIndex],
           ],
         ),
       ),
-      /*DRAWER DRAWER*/
-      /*APPBARAPPBAR*/
+      //////////*DRAWER DRAWER*///////////////
+      ////////////*APPBARAPPBAR*//////////////
       appBar: AppBar(
-        flexibleSpace: Image.asset('lib/assets/B1logo.png'),
+      backgroundColor: Colors.cyan[200] ,
+        flexibleSpace: Image.asset('lib/assets/B1logo.png',alignment: Alignment.centerRight),
         titleSpacing: 0.0,
-        title: const Text(
-          "Diario di bordo",
-          style: TextStyle(
-            color: Color.fromARGB(255, 227, 242, 253),
-            fontWeight: FontWeight.w800,
-            fontFamily: 'Roboto',
-            letterSpacing: 0.5,
-            fontSize: 18,
+        title: Container(
+          padding: EdgeInsets.all(8.0),
+          decoration:BoxDecoration(
+                    border: Border.all(
+                      color: Colors.blue,
+                      width: 3,),
+                    
+                    borderRadius: BorderRadius.circular(12),
+                      ),
+
+                    
+                   
+            child: const Text("Diario di bordo",
+              style: TextStyle(
+              //backgroundColor:Color.fromARGB(255, 66, 20, 235),
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontFamily: 'Roboto',
+              letterSpacing: 0.5,
+              fontSize: 18,
+            ),
           ),
         ),
-        /*actions: [
-          IconButton(
-              onPressed: () {
-                context
-                    .findAncestorStateOfType<_LogbookAppState>()
-                    
-              },
-              icon: const Icon(Icons.change_circle_outlined)),
-        ],*/
-        /*APPBARAPPBAR*/
+
+        //////////*APPBARAPPBAR*//////////////
       ),
       /* body: Consumer(
         builder: (context, ref, child) {
@@ -275,17 +255,15 @@ class  HomePageState extends State <HomePage> {
 
           return child!;
         },*/
-//BODYBODY//
+///////BODYBODY/////////BODYBODY//
       body: Center(
         child: Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             verticalDirection: VerticalDirection.down,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // (show ListTile index number , name)  _widgetOptions[_selectedIndex],         _widgetOptions[_selectedIndex],
-
               Container(
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
@@ -298,7 +276,7 @@ class  HomePageState extends State <HomePage> {
                     //autofocus: true,
                     style: TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
-                    controller: dataController,
+                    controller: dateController,
                     //[index][0],
 
                     decoration: InputDecoration(
@@ -306,6 +284,7 @@ class  HomePageState extends State <HomePage> {
                         border: InputBorder.none,
                         suffixIcon: Icon(
                             Icons.calendar_today), //spostare onTap sulla Icona
+                        // Use of hooks to set the controller text
                         labelText: 'Data di oggi $formattedDate'),
                     onTap: () async {
                       // Show date picker
@@ -316,66 +295,28 @@ class  HomePageState extends State <HomePage> {
                         lastDate: DateTime(2101),
                       );
 
-                      setState(() {
-                        //controllers[index][0].text = selectedDate.toString();
+                      if (pickedDate != null) {
+                        // Use hooks to update the controller text
+
+                        fixDate = DateTime(
+                          pickedDate.year,
+                          pickedDate.month,
+                          pickedDate.day,
+                          //pickedTime.hour,
+                          //pickedTime.minute,
+                        );
                         String formattedDate =
                             DateFormat('dd-MM-yyyy ').format(fixDate);
-                        dataController.text = formattedDate;
-                        //FocusScope.of(context).requestFocus(nextFocus);//mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
-                      });
-
-                      if (pickedDate != null) {
-                        setState(() {
-                          fixDate = DateTime(
-                            pickedDate.year,
-                            pickedDate.month,
-                            pickedDate.day,
-                            //pickedTime.hour,
-                            //pickedTime.minute,
-                          );
-                          //controllers[index][0].text = selectedDate.toString();
-                          String formattedDate =
-                              DateFormat('dd-MM-yyyy ').format(fixDate);
-                          dataController.text = formattedDate;
-                          FocusScope.of(context).requestFocus(
-                              nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
-                        });
-                        // }
+                        dateController.text = formattedDate;
+                        FocusScope.of(context).requestFocus(
+                            nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
                       }
-                      ;
-                    }),
+                    }), //onTap
               ),
-
-              /* OutlinedButton(
-          onPressed: () {
-            restorableDatePickerRouteFuture.present();
-          },
-          child: const Text('Open Date Picker'),
-        
-          ),*/
-              /*           SizedBox(
-                width: 300.0,
-                height: 300.0,
-                child: DatePickerExample(
-                  onDateSelected: _handleDateSelected,
-                ),
-              ),
-              // Ho utilizzato per il momento sized box (cfr widgedoftheweek per garantire la resa dei contenuti sulla HomePage
-*/
-              /*const Text(
-                'Datario',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontFamily: 'Roboto',
-                  letterSpacing: 0.5,
-                  fontSize: 14,
-                ),
-              ),*/
 
               //inserire qui il widget per il la autenticazione
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.blue,
@@ -385,10 +326,28 @@ class  HomePageState extends State <HomePage> {
                 child: Column(
                   children: [
                     ElevatedButton(
-                      onPressed: _openPopupWindow,
-                      child: Text('Autenticazione richiesta'),
+                      onPressed: () {
+                        authentication.openPopupWindow(context, ref);
+                      },
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.manage_accounts),
+                          Text('Autenticazione richiesta' ),
+                        ],
+                      ),//,
                     ),
+                    /*ElevatedButton(
+                      onPressed: () {
+                        _username = ref.watch(usernameProvider.notifier).state;
+                      },
+                      child: Text('Autenticazione richiesta'),
+                    ),*/
                     Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 4, color: Colors.blue),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       padding: EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -396,10 +355,6 @@ class  HomePageState extends State <HomePage> {
                           Text('Username: $_username',
                               style: TextStyle(fontSize: 14)),
                         ],
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 4, color: Colors.blue),
-                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
 
@@ -418,32 +373,26 @@ class  HomePageState extends State <HomePage> {
               ),
 
               const Text(' White Space            '),
-              ProgressIndicatorWidget(_totalProgress),
+              //ProgressIndicatorWidget(_totalProgress),
               const Text('lista scadenze'),
             ],
           ),
         ),
       ),
-      //BODYBODY//
+////////BODYBODY/////////BODYBODY//
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // (da eliminare)
-          // Clic sul floating button: andiamo ad incrementare il contatore facendo
-          // riferimento a InheritedCounter, l'InheritedWidget che propaga il contatore
-          // InheritedCounter.increase(context);
-
-          //ref.read(todoProvider.notifier).addTodo(
-          //    "${_todoTitles[_rnd.nextInt(_todoTitles.length)]} ${++_todoProgressiveCounter}",
-          //    _todoDescriptions[_rnd.nextInt(_todoDescriptions.length)]);
+          // da implementare Exit
         },
         tooltip: 'Ok,puoi iniziare',
         child: const Icon(Icons.start_sharp),
       ),
-      //drawer: const MyDrawer(),
     );
   }
+}
 
-  void _openPopupWindow() {
+/////////////////////////////////////////////////////////////////////////
+/* void _openPopupWindow() {
     showDialog(
       //documenta showDialog di Dialog
       context: context,
@@ -458,16 +407,27 @@ class  HomePageState extends State <HomePage> {
         );
       },
     );
+  }*/
+class Authentication {
+  void openPopupWindow(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return PopupWindow(
+          onDone: (String textField1Data, String textField2Data) {
+            // Use ref to access
+            ref.watch(usernameProvider.notifier).state = textField1Data;
+            // Handle other authentication logic as needed
+          },
+        );
+      },
+    );
   }
 }
 
-
-
 class PopupWindow extends StatefulWidget {
   final Function onDone; //definizione di onDone
-
   PopupWindow({required this.onDone});
-
   @override
   _PopupWindowState createState() => _PopupWindowState();
 }
@@ -508,7 +468,7 @@ class _PopupWindowState extends State<PopupWindow> {
               controller: _textField1Controller,
               validator: (value) {
                 if (value!.trim().isEmpty) {
-                  /*copiata riga 64*/
+                  
                   return 'Please enter some text';
                 }
 
@@ -576,5 +536,3 @@ bool _passwordValidationCriteria(String value) {
   RegExp regExp = new RegExp(pattern);
   return regExp.hasMatch(value);
 }
-
-*/

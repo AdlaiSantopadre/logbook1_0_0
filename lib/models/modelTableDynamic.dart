@@ -215,7 +215,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
                         controller: fileMese,
                         clearOnSubmit: false,
                         textSubmitted: (data) {
-                          fileMese.text = 'ret';// Request focus to keep the cursor in the TextField
+                          fileMese.text = '';// Request focus to keep the cursor in the TextField
                           FocusScope.of(context).requestFocus(meseFocusNode);
                         },
                         // textInputAction: TextInputAction.done,
