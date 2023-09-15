@@ -8,7 +8,7 @@ import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
 import 'package:logbook1_0_0/pages/pageVeicolo.dart';
 import 'package:logbook1_0_0/pages/pageDPI.dart';
 import 'package:logbook1_0_0/models/progressIndicator.dart';
-import 'package:logbook1_0_0/widgets/PopupWindow';
+import 'package:logbook1_0_0/widgets/authentication.dart';
 import 'package:logbook1_0_0/providers.dart';
 
 /*class HomePage extends StatefulWidget { 
@@ -79,7 +79,7 @@ class HomePage extends HookConsumerWidget {
 
     final selectedIndex = ref
         .watch(selectedIndexProvider); // Riverpod provider for selected index
-    var _username =  ref.watch(usernameProvider); // Riverpod provider for username
+    final _username =  ref.watch(usernameProvider); // Riverpod provider for username
        
 
     final dateController =
@@ -87,7 +87,7 @@ class HomePage extends HookConsumerWidget {
 
     // final passwordVisibility = useState<bool>(false); // Use hooks for password visibility
 
-    final authentication = ref.watch(authenticationProvider);
+   // final authentication = ref.watch(authenticationProvider);
 
     return Scaffold(
       //Creo un visual scaffold con appbar e floatingActionButton e drawer
@@ -327,7 +327,7 @@ class HomePage extends HookConsumerWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        authentication.openPopupWindow(context, ref);
+                        Authentication().openPopupWindow(context, ref);
                       },
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -408,6 +408,7 @@ class HomePage extends HookConsumerWidget {
       },
     );
   }*/
+/*///////////////////////////////////////////////////////////
 class Authentication {
   void openPopupWindow(BuildContext context, WidgetRef ref) {
     showDialog(
@@ -527,12 +528,12 @@ class _PopupWindowState extends State<PopupWindow> {
       ],
     );
   }
-}
+}*/
 
-/*copio _passwordValisdationCriteria()*/
+/*copio _passwordValisdationCriteria()
 bool _passwordValidationCriteria(String value) {
   String pattern =
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
   RegExp regExp = new RegExp(pattern);
   return regExp.hasMatch(value);
-}
+}*/

@@ -44,6 +44,8 @@ dependencies:
   flutter_hooks: ^0.20.1
   intl: ^0.18.0 #in order to add the intl package
   autocomplete_textfield: ^2.0.0 
+  sqflite: ^2.3.0
+  path: ^1.8.3
 
 
 dev_dependencies:

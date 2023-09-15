@@ -74,7 +74,7 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Table Example')),
+      appBar: AppBar(title: const Text('Table Example')),
       body: Column(
         children: [
           const Row(
@@ -153,10 +153,10 @@ class _MyPageState extends State<MyPage> {
                     ),
                     Expanded(
                       child: TextField(
-                        style:TextStyle(fontSize:10 ),
+                        style:const TextStyle(fontSize:10 ),
                         controller: controllers[index][2],
                         //focusNode: nextFocus,
-                        decoration: InputDecoration(hintText: 'Enter data'),
+                        decoration: const InputDecoration(hintText: 'Enter data'),
                                                 onTap: () async {
                    // Show date picker
                    final pickedDate = await showDatePicker(                 

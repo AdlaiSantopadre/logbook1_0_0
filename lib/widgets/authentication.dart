@@ -1,6 +1,24 @@
 
 import 'package:flutter/material.dart'; //per utilizzare il Material design
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logbook1_0_0/providers.dart';
 
+class Authentication {
+  void openPopupWindow(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return PopupWindow(
+          onDone: (String textField1Data, String textField2Data) {
+            // Use ref to access
+            ref.watch(usernameProvider.notifier).state = textField1Data;
+            // Handle other authentication logic as needed
+          },
+        );
+      },
+    );
+  }
+}
 class PopupWindow extends StatefulWidget {
   final Function onDone; //definizione di onDone
 

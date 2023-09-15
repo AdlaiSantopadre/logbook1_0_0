@@ -70,7 +70,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
               scrollDirection: Axis.horizontal,
               child :Column(
                 children: [
-          Row(children: [
+          const Row(children: [
             Text("AUTOSTRADE// per l'Italia"),
             Text("Direzione VII Tronco"),
           ]),
@@ -80,7 +80,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
                 style: TextStyle(fontSize: 10),
                 controller: mese,
                 //focusNode: nextFocus,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'MESE',
                   prefixText: "Mese di ",
                 ),
