@@ -80,7 +80,7 @@ class HomePage extends HookConsumerWidget {
     final selectedIndex = ref
         .watch(selectedIndexProvider); // Riverpod provider for selected index
     final _username =  ref.watch(usernameProvider); // Riverpod provider for username
-       
+     final _password =  ref.watch(passwordProvider);    
 
     final dateController =
         useTextEditingController(); // Use hooks for TextEditingController
@@ -350,9 +350,11 @@ class HomePage extends HookConsumerWidget {
                       ),
                       padding: EdgeInsets.all(8.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text('Username: $_username',
+                              style: TextStyle(fontSize: 14)),
+                              Text('Password: $_password',
                               style: TextStyle(fontSize: 14)),
                         ],
                       ),

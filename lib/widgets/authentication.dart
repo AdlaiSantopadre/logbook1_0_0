@@ -1,7 +1,10 @@
 
 import 'package:flutter/material.dart'; //per utilizzare il Material design
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+//import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logbook1_0_0/providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Authentication {
   void openPopupWindow(BuildContext context, WidgetRef ref) {
@@ -9,9 +12,9 @@ class Authentication {
       context: context,
       builder: (BuildContext context) {
         return PopupWindow(
-          onDone: (String textField1Data, String textField2Data) {
+          onDone: (String? textField1Data, String? textField2Data) {
             // Use ref to access
-            ref.watch(usernameProvider.notifier).state = textField1Data;
+            ref.read(usernameProvider.notifier).state = textField1Data;
             // Handle other authentication logic as needed
           },
         );
@@ -19,55 +22,56 @@ class Authentication {
     );
   }
 }
-class PopupWindow extends StatefulWidget {
-  final Function onDone; //definizione di onDone
 
-  PopupWindow({required this.onDone});
+// ignore: must_be_immutable
+class PopupWindow extends ConsumerWidget {
+  
+  PopupWindow({super.key, required this.onDone});
+  final Function(String?, String?) onDone;
 
-  @override
-  _PopupWindowState createState() => _PopupWindowState();
-}
-
-class _PopupWindowState extends State<PopupWindow> {
   final _formKey = GlobalKey<FormState>();
-  final _textField1Controller =
-      TextEditingController(); //creo due TextEditingController
+  final _textField1Controller = TextEditingController(); //creo due TextEditingController
   final _textField2Controller = TextEditingController();
-  late bool _passwordVisibility;
+  late bool _passwordVisibility = true;
 
-  @override
+ /* @override
   void initState() {
     super.initState();
-    _passwordVisibility = false;
-  }
+    _passwordVisibility 
+  }*/
 
-  void _done() {
+  void _done(BuildContext context, WidgetRef ref) {
     if (_formKey.currentState!.validate()) {
-      widget.onDone(
+      onDone(
         _textField1Controller.text,
         _textField2Controller.text,
       );
-      Navigator.pop(context);
+    Navigator.pop(context);  
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    
+    final database = ref.read(databaseProvider); // Access the database provider
+    final password = ref.read(passwordProvider); // Access the password state
+    final username = ref.read(usernameProvider);
+    final isValidPassword = ref.watch(passwordValidationProvider); // Access password validation result _done,
+    final isAuthenticationLoading = ref.watch(authenticationProvider);
+    
     return AlertDialog(
-      title: Text(''),
+      title: const Text(''),
       content: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextFormField(
+              TextFormField(
               controller: _textField1Controller,
               validator: (value) {
                 if (value!.trim().isEmpty) {
-                  /*copiata riga 64*/
                   return 'Please enter some text';
                 }
-
                 return null;
               },
               decoration: InputDecoration(
@@ -76,38 +80,38 @@ class _PopupWindowState extends State<PopupWindow> {
                 icon: new Icon(
                   Icons.engineering,
                   color: Colors.grey,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            TextFormField(
+              TextFormField(
               controller: _textField2Controller,
+              obscureText: !_passwordVisibility,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
                 }
-                if (!_passwordValidationCriteria(value)) {
+                if (/*!isValidPassword!*/!_passwordValidationCriteria(value))  {
                   return "The password you entered doesn't meet one or more of the following criteria: 1 upper case character, 1 lower case character, 1 numeric character, 1 special character (\!, \@, \#, \$, \&, \*, \~)";
                 }
                 return null;
               },
               decoration: InputDecoration(
-                labelText: "Password",
-                hintText: "Please enter your password",
-                icon: new Icon(
-                  Icons.lock,
-                  color: Colors.grey,
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    !_passwordVisibility
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: Colors.grey,
-                  ),
+                  labelText: "Password",
+                  hintText: "Please enter your password",
+                  icon:  const Icon(Icons.lock,      
+                                color: Colors.grey,
+                        ) ,
+                  suffixIcon: IconButton(
+                              icon: Icon(
+                              !_passwordVisibility
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                                color: Colors.grey,
+                                ),
                   onPressed: () {
-                    setState(() {
+                    /*setState(() {
                       _passwordVisibility = !_passwordVisibility;
-                    });
+                    });*/
                   },
                 ),
               ),
@@ -117,7 +121,9 @@ class _PopupWindowState extends State<PopupWindow> {
       ),
       actions: [
         TextButton(
-          onPressed: _done,
+          onPressed: () => _done(context, ref),
+          
+                 
           child: Text('Done'),
         ),
       ],
@@ -125,7 +131,7 @@ class _PopupWindowState extends State<PopupWindow> {
   }
 }
 
-/*copio _passwordValisdationCriteria()*/
+//copio _passwordValisdationCriteria()
 bool _passwordValidationCriteria(String value) {
   String pattern =
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
