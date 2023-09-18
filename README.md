@@ -34,9 +34,7 @@ componente tematico della App le quali a loro volta permettono di
 navigare al livello 2 ed accedere al liv.2 Quindi la navigazione è
 orizzontale solo tre HomePage, Drawer e HomePage e Popup
 
-![A screenshot of a computer screen Description automatically
-generated](media/image1.png){width="6.270138888888889in"
-height="3.1979166666666665in"}
+![Struttura Navigazione](lib\assets\StrutturaNavigazione.png)
 
 Pagina iniziale della App. Contiene l\`accesso al drawer per la
 navigazione
