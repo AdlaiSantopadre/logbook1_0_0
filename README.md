@@ -34,4 +34,22 @@ componente tematico della App le quali a loro volta permettono di
 navigare al livello 2 ed accedere al liv.2 Quindi la navigazione è
 orizzontale solo tre HomePage, Drawer e HomePage e Popup
 
-![struttura di navigazione](C:\Users\campus.uniurb.it\Desktop\StrutturaNavigazione.png)
+![A screenshot of a computer screen Description automatically
+generated](media/image1.png){width="6.270138888888889in"
+height="3.1979166666666665in"}
+
+Pagina iniziale della App. Contiene l\`accesso al drawer per la
+navigazione
+
+Permette di scegliere (e memorizzare la data della attività), lanciare
+la autenticazione tramite popup, consultare la lista delle scadenze,
+avere un colpo d\`occhio tramite indicatore di progresso per l\`avvio
+delle attività, e se il livello di progresso abilita il pulsante
+flottante chiudere la app salvando i dati aggiornati
+
+Ho implementato l\`autenticazione con una richiesta (si preme , si apre
+una popup, e username e password validati secondo regole vengono
+aggiornati come testo visualizzato nella Homepage
+
+Ho implementato un datario per scegliere la data di inizio attività
+(dovrò scegliere anche la data (orario di fine attività).
