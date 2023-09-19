@@ -3,7 +3,7 @@
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:logbook1_0_0/pages/subPagePrimoSoccorso.dart';
+
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -108,7 +108,18 @@ class CheckListView extends ConsumerWidget {
   }
 }
 
-////////////////////////////////////////////////////////////////////
+/// ****************************************************** */
+//provider e classe x accertare il completamento dei controlli
+//final allDoneProvider = StateNotifierProvider<AllDoneNotifier, bool>(
+//   (ref) => AllDoneNotifier(false));
+
+/*class AllDoneNotifier extends StateNotifier<bool> {
+  AllDoneNotifier(bool state) : super(state);
+  void setAllDone(bool value) {
+    state = value;
+    print('$AllDoneNotifier');
+  }
+}*/
 
 class PagePrimoSoccorso extends HookConsumerWidget {
   const PagePrimoSoccorso({super.key});
@@ -134,7 +145,7 @@ class PagePrimoSoccorso extends HookConsumerWidget {
         title: const Text("Check list Primo Soccorso"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.home_outlined),
+            icon: Icon(Icons.home_outlined),
             onPressed: () {
               if (allDone) {
                 Navigator.pop(context);
@@ -143,13 +154,13 @@ class PagePrimoSoccorso extends HookConsumerWidget {
           ),
           IconButton(
             tooltip: "disposizioni di riferimento",
-            icon: const Icon(Icons.info),
+            icon: Icon(Icons.info),
             onPressed: () {
-                Navigator.push(
+              /*  Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const subPagePrimoSoccorso()),
                                 );
-       
+       */
             },
           ),
         ],

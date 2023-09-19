@@ -10,8 +10,7 @@ import  'package:logbook1_0_0/pages/homePage.dart';
 //import 'package:logbook1_0_0/pages/pageDPI.dart';
 //import 'package:logbook1_0_0/models/progressIndicator.dart';
 
-void main() =>
-    runApp( const ProviderScope(child:LogbookApp()));
+
 
 //All Flutter applications using Riverpod must contain a [ProviderScope] at the root of their widget tree
 /*void main() {
@@ -21,7 +20,8 @@ void main() =>
     ),
   );
 }*/
-
+void main() =>
+    runApp( const ProviderScope(child:LogbookApp()));
 //**MyApp is  LogbookApp**//
 class LogbookApp extends StatelessWidget {
   const LogbookApp({super.key});
@@ -29,13 +29,13 @@ class LogbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        /*For a Material app, you can use a Scaffold widget;
-     it provides a default banner, background color, and has API for adding drawers, snack bars, and bottom sheets. 
+       
+     /* it provides a default banner, background color, and has API for adding drawers, snack bars, and bottom sheets. 
     Then you can add the Center widget directly to the body property for the home page.*/
         title: 'Logbook HomePage',
         debugShowCheckedModeBanner: true, //mostra il banner debug mode
-        /*theme: ThemeData(
-            primarySwatch: Colors.cyan, canvasColor: Colors.cyan[100]),*/
+        theme: ThemeData(
+            primarySwatch: Colors.cyan, canvasColor: Colors.cyan[50],colorSchemeSeed: Colors.blue[600],),
         home: HomePage()); // widget for the default route of the app
   }
 }

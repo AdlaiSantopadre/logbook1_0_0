@@ -137,7 +137,10 @@ class _PageVeicoloState extends State<PageVeicolo> {
     canAddRow = controllers.isNotEmpty &&
         controllers.last.every((controller) => controller.text.isNotEmpty);
   }
-
+//devo modificare la logica affinchè dopo aver scelto
+// il mese  carico la tabella e aggiungo una riga vuota .
+//Poi con il riempimento della riga salvo la tabella con il floating action, esco dalla pagina
+// invrementando il valore di progressIndicator con DONE
   void addRow() {
     if (canAddRow) {
       setState(() {
@@ -151,9 +154,9 @@ class _PageVeicoloState extends State<PageVeicolo> {
   Widget build(BuildContext context) {
     final screenWidth = ScreenSizeService(context).width;
     final screenHeight = ScreenSizeService(context).height;
-    return Scaffold(
+    return Scaffold( // <<-SCAFFOLD
         //resizeToAvoidBottomInset: false,
-//APPBARAPPBAR//
+//APPBARAPPBAR////APPBARAPPBAR////APPBARAPPBAR//
         appBar: AppBar(
           title: Text("Rapporto Percorrenze"),
           actions: [
@@ -177,6 +180,8 @@ class _PageVeicoloState extends State<PageVeicolo> {
             ),
           ],
         ),
+ //APPBARAPPBAR//   
+
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: ConstrainedBox(
@@ -283,7 +288,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
                         width: 3,
                       ),
                       borderRadius: BorderRadius.circular(5)),
-                  child: Row(
+                  child: const Row(
                     children: [
                       SizedBox(width: 150, child: Text('DataOra')),
                       SizedBox(width: 100, child: Text('Km iniziali')),
@@ -556,6 +561,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
             ),
           ),
         ),
+  //floatingActionButton//floatingActionButton      
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             addRow();
