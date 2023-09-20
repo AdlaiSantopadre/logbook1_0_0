@@ -184,7 +184,7 @@ class PagePrimoSoccorso extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Blue se completato',
         backgroundColor:
-            (allDone && (!_incremented)) ? Colors.blue : Colors.grey,
+            (allDone && (!_incremented)) ? Colors.blue.shade200 : Colors.grey.shade400,
         onPressed: () {
           escape(allDone);
         },

@@ -22,6 +22,7 @@ class ProgressIndicatorWidget extends ConsumerWidget {
     }
 
     return Container(
+      alignment: Alignment.centerLeft,
       height: 20, // Adjust the height as needed
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10), // Add rounded corners
@@ -32,9 +33,10 @@ class ProgressIndicatorWidget extends ConsumerWidget {
         alignment: Alignment.centerLeft,
         widthFactor: totalProgress / 100,
         child: Container(
-          child:Text("Task Progress: $totalProgress%"),
+          
           height: 20, // Adjust the height as needed
           decoration: BoxDecoration(
+            //border: Border.all( ),
             borderRadius: BorderRadius.circular(10), // Add rounded corners
             color: color, // Use the calculated color
           ),

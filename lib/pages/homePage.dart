@@ -73,7 +73,9 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('Building $runtimeType');
-    final totalProgress = ref.watch(totalProgressProvider);
+
+   final totalProgress = ref
+       .watch(totalProgressProvider);
 
     final selectedIndex = ref
         .watch(selectedIndexProvider); // Riverpod provider for selected index
@@ -89,9 +91,10 @@ class HomePage extends HookConsumerWidget {
     // final authentication = ref.watch(authenticationProvider);
 
     return Scaffold(
-      //Creo un visual scaffold con appbar e floatingActionButton e drawer
+    
       ///DRAWER ///DRAWER //
       drawer: Drawer(
+        backgroundColor: Colors.blue.shade50,
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.https://flutter.github.io/samples/add_a_drawer_to_a_screen.html
@@ -222,21 +225,21 @@ class HomePage extends HookConsumerWidget {
         title: Container(
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            border: Border.all(
+            /*border: Border.all(
               color: Colors.blue,
               width: 3,
-            ),
+            ),*/
             borderRadius: BorderRadius.circular(12),
           ),
           child: const Text(
             "√ Diario di bordo",
             style: TextStyle(
-              backgroundColor: Colors.blue,
+              //backgroundColor: Colors.blue,
               color: Colors.white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Roboto',
               letterSpacing: 0.5,
-              fontSize: 18,
+              //fontSize: 18,
             ),
           ),
         ),
@@ -254,11 +257,11 @@ class HomePage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                padding: EdgeInsets.all(2.0),
+                padding: EdgeInsets.all(4.0),
                 decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.blue,
-                      width: 2,
+                      width: 3,
                     ),
                     borderRadius: BorderRadius.circular(12)),
                 child: TextField(
@@ -271,7 +274,7 @@ class HomePage extends HookConsumerWidget {
                     decoration: InputDecoration(
                         //hintText: 'percorrenze di',
                         border: InputBorder.none,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                             Icons.calendar_today), //spostare onTap sulla Icona
                         // Use of hooks to set the controller text
                         labelText: 'Data di oggi $formattedDate'),
@@ -363,17 +366,28 @@ class HomePage extends HookConsumerWidget {
                 ),
               ),
 
-              Text(
-                  "Task Progress: ${ref.watch(totalProgressProvider.notifier).state}"),
-              //ProgressIndicatorWidget(_totalProgress),
-              Consumer(
-                builder: (context, ref, child) {
-                  final totalProgress = ref.watch(totalProgressProvider);
-                  Text(
-                      "Task Progress: ${ref.watch(totalProgressProvider.notifier).state}");
-                  return ProgressIndicatorWidget(totalProgress);
-                },
+              Container(
+                decoration: BoxDecoration(
+                        border: Border.all(width: 4, color: Colors.blue),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                        "Stato avanzamento: ${ref.watch(totalProgressProvider.notifier).state} %"),
+                  //ProgressIndicatorWidget(_totalProgress),
+                Consumer(
+                  builder: (context, ref, child) {
+                    //final totalProgress = ref.watch(totalProgressProvider);
+                    return ProgressIndicatorWidget(totalProgress);
+                  },
+                ),],
+                ),
               ),
+              
 
               const Text('lista scadenze'),
             ],
@@ -392,6 +406,7 @@ class HomePage extends HookConsumerWidget {
         },*/
 ////////BODYBODY/////////BODYBODY//
       floatingActionButton: FloatingActionButton(
+        foregroundColor: Colors.blue.shade900,
         onPressed: () {
           // da implementare Exit
         },
