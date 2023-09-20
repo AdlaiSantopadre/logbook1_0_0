@@ -12,7 +12,7 @@ import  'package:logbook1_0_0/pages/homePage.dart';
 
 
 
-//All Flutter applications using Riverpod must contain a [ProviderScope] at the root of their widget tree
+
 /*void main() {
   runApp(
     ProviderScope(
@@ -22,8 +22,8 @@ import  'package:logbook1_0_0/pages/homePage.dart';
 }*/
 void main() =>
     runApp( const ProviderScope(child:LogbookApp()));
-//**MyApp is  LogbookApp**//
-class LogbookApp extends StatelessWidget {
+//All Flutter applications using Riverpod must contain a [ProviderScope] at the root of their widget tree
+class LogbookApp extends StatelessWidget {//MyApp is  LogbookApp!!!
   const LogbookApp({super.key});
 
   @override
@@ -38,9 +38,17 @@ class LogbookApp extends StatelessWidget {
           useMaterial3: true,
           //primarySwatch: Colors.blue,
            // primarySwatch: Colors.cyan,
-          canvasColor: Colors.cyan[50],
-          colorScheme: ColorScheme(brightness:Brightness.light, primary:Colors.blue.shade600, onPrimary:Colors.blue, secondary: Colors.cyan.shade100, onSecondary: Colors.cyan.shade200, error: Colors.red.shade100, onError: Colors.red.shade300, background: Colors.cyan.shade50, onBackground: Colors.blueGrey.shade100, surface: Colors.blue.shade100, onSurface: Colors.blue.shade900)
-          //colorSchemeSeed: Colors.blue[600],
+          canvasColor: Colors.cyan[600],
+          colorScheme: ColorScheme(brightness:Brightness.light,
+            primary:Colors.blue.shade600, onPrimary:Colors.blue,
+            secondary: Colors.cyan.shade100, onSecondary: Colors.cyan.shade200,
+            error: Colors.red.shade300, onError: Colors.red.shade200,
+            background: Colors.cyan.shade50, onBackground: Colors.blueGrey.shade100,
+            surface: Colors.cyan.shade200, onSurface: Colors.blue.shade900),
+          
+            textTheme: TextTheme(bodyMedium:TextStyle (color: Colors.blue.shade900), // Adjust this color as needed
+            ),
+            // Other theme properties
           ),
         home: HomePage()); // widget for the default route of the app
   }
