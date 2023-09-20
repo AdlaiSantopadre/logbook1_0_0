@@ -77,9 +77,10 @@ flutter:
   assets:
   - lib/assets/B1logo.png
   - lib/assets/Scheda_Ispezione_Periodica_Pacchetto_Di_Medicazione.PNG
+  - lib/assets/RapportoPercorrenze.png
 
-  #   - images/a_dot_ham.jpeg
 
+  #   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

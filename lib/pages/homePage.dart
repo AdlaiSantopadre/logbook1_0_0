@@ -27,44 +27,9 @@ class HomePage extends HookConsumerWidget {
   FocusNode nextFocus = FocusNode();
   String formattedDate = DateFormat('dd-MM-yyyy ').format(DateTime.now());
 
-//  int selectedIndex = 0;
 
-  // final dataController = TextEditingController();
-//devi aggiungere un TextEditingController;Create a text controller and use it to retrieve the current value
-// of the TextField.
-/*void dispose() {
-    // Clean up the controller when the widget is disposed.
-    dataController.dispose();  
-                }*/
-// dispose gestito da riverpod
-
-  //List per gestire la navigazione nel drawer
-
-  /*static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);*/
-
-  /*elenco opzioni di scelta
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text( 'Index 0: Home',
-      //  style: optionStyle,
-    ),
-    Text('Index 1: Veicolo',
-      //  style: optionStyle,
-    ),
-    Text( 'Index 2: Equipaggiamento',
-      //  style: optionStyle,
-    ),
-    Text( 'Index 3: DPI',
-      //  style: optionStyle,
-    ),
-    Text('Index 4: Primo soccorso',
-      //  style: optionStyle,
-    ),
-    Text('Index 5: Dotazioni Antincendio',
-      // style: optionStyle,
-    ),];
   
-*/ // (show ListTile index number , name)  _widgetOptions[_selectedIndex],
+// (show ListTile index number , name)  _widgetOptions[_selectedIndex],
   void _onItemTapped(int index, WidgetRef ref) {
     ref.read(selectedIndexProvider.notifier).state = index;
   }
@@ -136,7 +101,7 @@ class HomePage extends HookConsumerWidget {
                 _onItemTapped(1, ref);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PageVeicolo()),
+                  MaterialPageRoute(builder: (context) => const PageVeicolo(title: 'Rapporto Percorrenze',)),
                 );
               },
             ),

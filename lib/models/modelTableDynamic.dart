@@ -8,46 +8,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  static const appTitle = 'Tabella Modello';
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appTitle,
-      theme: ThemeData(
-        useMaterial3: true,
-        //primarySwatch: Colors.blue,
-        // primarySwatch: Colors.cyan,
-        canvasColor: Colors.cyan[600],
-        colorScheme: ColorScheme(
-            brightness: Brightness.light,
-            primary: Colors.blue.shade600,
-            onPrimary: Colors.blue.shade200,
-            secondary: Colors.cyan.shade100,
-            onSecondary: Colors.cyan.shade200,
-            error: Colors.red.shade300,
-            onError: Colors.red.shade200,
-            background: Colors.cyan.shade50,
-            onBackground: Colors.blueGrey.shade100,
-            surface: Colors.cyan.shade100,
-            onSurface: Colors.blue.shade900),
-
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(
-              color: Colors.blue.shade900), // Adjust this color as needed
-        ),
-        // Other theme properties
-      ),
-      home: PageVeicolo(title: appTitle),
-    );
-  }
-}
-
+//devo modificare la logica affinchè dopo aver scelto
+// il mese  carico la tabella e aggiungo una riga vuota .
+//Poi con il riempimento della riga salvo la tabella con il floating action, esco dalla pagina
+// invrementando il valore di progressIndicator con DONE
 /**cancella tutto  sopra */
 GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
@@ -175,10 +139,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
         controllers.last.every((controller) => controller.text.isNotEmpty);
   }
 
-//devo modificare la logica affinchè dopo aver scelto
-// il mese  carico la tabella e aggiungo una riga vuota .
-//Poi con il riempimento della riga salvo la tabella con il floating action, esco dalla pagina
-// invrementando il valore di progressIndicator con DONE
+
   void addRow() {
     if (canAddRow) {
       setState(() {
