@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';//for non web applications only
+import 'package:logbook1_0_0/widgets/screenSizeService.dart';
+import 'dart:io'; //for non web applications only!!!
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 void main() => runApp(const MyApp());
 
@@ -15,13 +17,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: appTitle,
+      theme: ThemeData(
+        useMaterial3: true,
+        //primarySwatch: Colors.blue,
+        // primarySwatch: Colors.cyan,
+        canvasColor: Colors.cyan[600],
+        colorScheme: ColorScheme(
+            brightness: Brightness.light,
+            primary: Colors.blue.shade600,
+            onPrimary: Colors.blue.shade200,
+            secondary: Colors.cyan.shade100,
+            onSecondary: Colors.cyan.shade200,
+            error: Colors.red.shade300,
+            onError: Colors.red.shade200,
+            background: Colors.cyan.shade50,
+            onBackground: Colors.blueGrey.shade100,
+            surface: Colors.cyan.shade100,
+            onSurface: Colors.blue.shade900),
+
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+              color: Colors.blue.shade900), // Adjust this color as needed
+        ),
+        // Other theme properties
+      ),
       home: PageVeicolo(title: appTitle),
     );
   }
 }
 
+/**cancella tutto  sopra */
 GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
 class PageVeicolo extends StatefulWidget {
@@ -31,9 +58,8 @@ class PageVeicolo extends StatefulWidget {
   State<PageVeicolo> createState() => _PageVeicoloState();
 }
 
-class _PageVeicoloState extends State<PageVeicolo> {
 //Registro Annotazioni e Percorrenze Veicolo
-
+class _PageVeicoloState extends State<PageVeicolo> {
   TextEditingController fileMese = TextEditingController();
   TextEditingController targa = TextEditingController();
   late Directory
@@ -107,16 +133,27 @@ class _PageVeicoloState extends State<PageVeicolo> {
       String fileContents = await file.readAsString();
       List<dynamic> decodedData = jsonDecode(fileContents);
 
-      // Populate controllers with loaded data
-      for (int i = 0; i < controllers.length && i < decodedData.length; i++) {
-        for (int j = 0;
-            j < controllers[i].length && j < decodedData[i].length;
-            j++) {
-          controllers[i][j].text = decodedData[i][j];
-        }
+      // Clear existing data before loading new data
+      for (var controllerList in controllers) {
+      for (var controller in controllerList) {
+        controller.clear();
+      }
+    }
+   controllers.clear(); // Clear the list of controllers
+     // Populate controllers with loaded data
+    for (int i = 0; i < decodedData.length; i++) {
+      if (i >= controllers.length) {
+        // If the number of rows in data exceeds the number of rows in controllers, add a new row
         canAddRow = true;
         addNewRow();
       }
+      for (int j = 0; j < decodedData[i].length; j++) {
+        controllers[i][j].text = decodedData[i][j];
+      }
+    }
+        
+      updateCanAddRow();  
+     
     } catch (e) {
       // Handle file loading errors
       print('Error loading data from file: $e');
@@ -137,6 +174,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
     canAddRow = controllers.isNotEmpty &&
         controllers.last.every((controller) => controller.text.isNotEmpty);
   }
+
 //devo modificare la logica affinchè dopo aver scelto
 // il mese  carico la tabella e aggiungo una riga vuota .
 //Poi con il riempimento della riga salvo la tabella con il floating action, esco dalla pagina
@@ -154,14 +192,18 @@ class _PageVeicoloState extends State<PageVeicolo> {
   Widget build(BuildContext context) {
     final screenWidth = ScreenSizeService(context).width;
     final screenHeight = ScreenSizeService(context).height;
-    return Scaffold( // <<-SCAFFOLD
+    return Scaffold(
+        // <<-SCAFFOLD
         //resizeToAvoidBottomInset: false,
 //APPBARAPPBAR////APPBARAPPBAR////APPBARAPPBAR//
         appBar: AppBar(
-          title: Text("Rapporto Percorrenze"),
+          title: const Text(
+            "Rapporto Percorrenze",
+            textScaleFactor: 1,
+          ),
           actions: [
             IconButton(
-              icon: Icon(Icons.save),
+              icon: const Icon(Icons.save),
               onPressed: () {
                 String fileName = fileMese.text;
                 if (fileName.isNotEmpty) {
@@ -170,7 +212,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.refresh),
+              icon: const Icon(Icons.refresh),
               onPressed: () {
                 String fileName = fileMese.text;
                 if (fileName.isNotEmpty) {
@@ -180,7 +222,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
             ),
           ],
         ),
- //APPBARAPPBAR//   
+        //APPBARAPPBAR//
 
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -193,7 +235,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
               scrollDirection: Axis.horizontal,
               child: Column(children: [
 //intestazioni//
-                Row(children: [
+                const Row(children: [
                   Text("AUTOSTRADE// per l'Italia"),
                   Text("Direzione VII Tronco"),
                 ]),
@@ -204,7 +246,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
                     child: AutoCompleteTextField<String>(
                         key: key,
                         suggestions: validMonthNames,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText:
                               'Al mese scelto sono associati i dati salvati ',
                         ),
@@ -220,15 +262,14 @@ class _PageVeicoloState extends State<PageVeicolo> {
                         controller: fileMese,
                         clearOnSubmit: false,
                         textSubmitted: (data) {
-                          fileMese.text = '';// Request focus to keep the cursor in the TextField
+                          fileMese.text =
+                              ''; // Request focus to keep the cursor in the TextField
                           FocusScope.of(context).requestFocus(meseFocusNode);
                         },
                         // textInputAction: TextInputAction.done,
                         itemSubmitted: (value) {
                           // Clear the TextField
                           fileMese.text = value;
-                           
-                          
 
                           // Print an error message
                         } /* else {fileMese.clear();FocusScope.of(context).requestFocus(FocusNode());
@@ -236,43 +277,16 @@ class _PageVeicoloState extends State<PageVeicolo> {
 
                         ),
                   ),
-                  // Handle the selected month name here
-
-                  /*  
-                       textSubmitted: (input) {
-                          if (!validMonthNames.contains(input)) {
-                            //fileMese.clear();
-                           
-                            debugPrint('Building $runtimeType');
-                          }
-                        },*/
-
-                  // autofocus: true,
-
-                  /*
-                    child: TextField(
-                      
-                     // expands: true,
-                     // maxLines: null,         
-                      style: TextStyle(fontSize: 14),
-                      controller: fileMese,
-                      //focusNode: nextFocus,
-                      decoration: InputDecoration(
-                        labelText: 'Al mese scelto sono associati i dati salvati ',
-                        //hintText: 'Mese',
-                        prefixText: "Mese di ",
-                      ),
-                    ),*/
 
 //Intestazioni
                   SizedBox(
                     height: 80,
                     width: 200,
                     child: TextField(
-                      style: TextStyle(fontSize: 14),
+                      //style: TextStyle(fontSize: 14),
                       controller: targa,
                       //focusNode: nextFocus,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Targa',
                         labelText: 'Targa',
                       ),
@@ -281,21 +295,51 @@ class _PageVeicoloState extends State<PageVeicolo> {
                 ]),
 
                 Container(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   decoration: BoxDecoration(
                       border: Border.all(
-                        color: Color.fromARGB(255, 23, 110, 182),
-                        width: 3,
+                        color: Colors.blue.shade900,
+                        width: 2,
                       ),
                       borderRadius: BorderRadius.circular(5)),
                   child: const Row(
                     children: [
-                      SizedBox(width: 150, child: Text('DataOra')),
-                      SizedBox(width: 100, child: Text('Km iniziali')),
-                      SizedBox(width: 150, child: Text('DataOra')),
-                      SizedBox(width: 50, child: Text('Km finali')),
-                      SizedBox(width: 150, child: Text('Note')),
-                      SizedBox(width: 50, child: Text('Autista')),
+                      SizedBox(
+                          width: 150,
+                          child: Text(
+                            '  DataOra',
+                            textAlign: TextAlign.center,
+                          )),
+                      SizedBox(
+                          width: 75,
+                          child: Text(
+                            'Km iniziali',
+                            textAlign: TextAlign.center,
+                          )),
+                      SizedBox(
+                          width: 150,
+                          child: Text(
+                            'DataOra',
+                            textAlign: TextAlign.center,
+                          )),
+                      SizedBox(
+                          width: 75,
+                          child: Text(
+                            'Km finali',
+                            textAlign: TextAlign.center,
+                          )),
+                      SizedBox(
+                          width: 150,
+                          child: Text(
+                            'Note',
+                            textAlign: TextAlign.center,
+                          )),
+                      SizedBox(
+                          width: 75,
+                          child: Text(
+                            'Autista',
+                            textAlign: TextAlign.center,
+                          )),
                     ],
                   ),
                 ),
@@ -303,25 +347,14 @@ class _PageVeicoloState extends State<PageVeicolo> {
 
                 /*    child:*/ Column(
                   children: List.generate(controllers.length, (index) {
-                    return /*SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        Expanded(
-                      child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Column(
-                      children: List.generate(controllers.length, (index) {
-                      return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                              
-                        child:*/
-                        Container(
-                      padding: EdgeInsets.all(1.0),
+                    return Container(
+                      padding: const EdgeInsets.all(4.0),
                       decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.blue,
+                            color: Colors.blue.shade900,
                             width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(3)),
+                          borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         textBaseline: TextBaseline.alphabetic,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -331,26 +364,20 @@ class _PageVeicoloState extends State<PageVeicolo> {
                             width: 150,
                             height: 80,
                             child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
                               child: TextField(
                                 expands: true,
                                 maxLines: null,
 
-                                style: TextStyle(fontSize: 14),
+                                style: const TextStyle(fontSize: 12),
                                 controller: controllers[index][0],
                                 readOnly: true, // Prevent manual editing
-                                decoration: InputDecoration(
-                                    labelText: 'Partenza',
+                                decoration: const InputDecoration(
+                                    labelText: 'Uscita',
                                     icon: Icon(Icons.calendar_today)),
                                 //textAlignVertical: TextAlignVertical.top,
                                 onTap: () async {
                                   // Show date picker
-                                  final pickedDate = await showDatePicker(
+                                  final pickedDate = await showRoundedDatePicker(
                                     context: context,
                                     initialDate: selectedInitDate,
                                     firstDate: DateTime(2000),
@@ -375,7 +402,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
                                         );
                                         //controllers[index][0].text = selectedDate.toString();
                                         String formattedDate =
-                                            DateFormat('yyyy-MM-dd HH:mm')
+                                            DateFormat('dd-MM-yyyy HH:mm')
                                                 .format(selectedInitDate);
                                         controllers[index][0].text =
                                             formattedDate;
@@ -396,40 +423,29 @@ class _PageVeicoloState extends State<PageVeicolo> {
                           //DATA DI INIZIO DATA DI INIZIO
                           //KM INIZIALI KM INIZIALI
                           SizedBox(
-                            width: 120,
+                            width: 75,
                             height: 80,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                //shape: BoxShape.circle,
+                            child: TextField(
+                              style: TextStyle(fontSize: 14),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(7)
+                              ],
+                              maxLength: 7,
+                              textAlign: TextAlign.center,
+                              textAlignVertical: TextAlignVertical.top,
 
-                                border: Border.all(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              child: TextField(
-                                style: TextStyle(fontSize: 14),
-                                keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(7)
-                                ],
-                                maxLength: 7,
-                                textAlign: TextAlign.center,
-                                textAlignVertical: TextAlignVertical.top,
-
-                                controller: controllers[index][1],
-                                //focusNode: nextFocus,
-                                decoration:
-                                    InputDecoration(labelText: 'Km iniziali'),
-                                onChanged: (value) {
-                                  updateCanAddRow();
-                                },
-                                onEditingComplete: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(nextFocus);
-                                },
-                              ),
+                              controller: controllers[index][1],
+                              //focusNode: nextFocus,
+                              decoration: const InputDecoration(
+                                  labelText: 'Km iniziali'),
+                              onChanged: (value) {
+                                updateCanAddRow();
+                              },
+                              onEditingComplete: () {
+                                FocusScope.of(context).requestFocus(nextFocus);
+                              },
                             ),
                           ),
                           //KM INIZIALI KM INIZIALI
@@ -438,14 +454,19 @@ class _PageVeicoloState extends State<PageVeicolo> {
                             width: 150,
                             height: 80,
                             child: TextField(
-                              style: TextStyle(fontSize: 14),
+                              expands: true,
+                              maxLines: null,
+
+                              style: const TextStyle(fontSize: 12),
                               controller: controllers[index][2],
-                              //focusNode: nextFocus,
-                              decoration:
-                                  InputDecoration(hintText: 'Enter data'),
+                              readOnly: true, // Prevent manual editing
+                              decoration: const InputDecoration(
+                                  labelText: 'Rientro',
+                                  icon: Icon(Icons.calendar_today)),
+                              //textAlignVertical: TextAlignVertical.top
                               onTap: () async {
                                 // Show date picker
-                                final pickedDate = await showDatePicker(
+                                final pickedDate = await showRoundedDatePicker(
                                   context: context,
                                   initialDate: selectedEndDate,
                                   firstDate: DateTime(2000),
@@ -470,7 +491,7 @@ class _PageVeicoloState extends State<PageVeicolo> {
                                       );
                                       //controllers[index][0].text = selectedDate.toString();
                                       String formattedDate =
-                                          DateFormat('DD-MM-yy HH:mm')
+                                          DateFormat('dd-MM-yyyy HH:mm')
                                               .format(selectedEndDate);
                                       controllers[index][2].text =
                                           formattedDate;
@@ -489,14 +510,22 @@ class _PageVeicoloState extends State<PageVeicolo> {
                           //DATA DI RITORNO DATA DI RITORNO
                           //KM FINALI KM FINALI
                           SizedBox(
-                            width: 50,
+                            width: 75,
                             height: 80,
                             child: TextField(
-                              style: TextStyle(fontSize: 14),
+                              //style: TextStyle(fontSize: 14),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(7)
+                              ],
+                              maxLength: 7,
+                              textAlign: TextAlign.center,
+                              textAlignVertical: TextAlignVertical.top,
                               controller: controllers[index][3],
                               //focusNode: nextFocus,
                               decoration:
-                                  InputDecoration(hintText: 'KM rientro'),
+                                  const InputDecoration(labelText: 'Km finali'),
                               onChanged: (value) {
                                 updateCanAddRow();
                               },
@@ -511,11 +540,13 @@ class _PageVeicoloState extends State<PageVeicolo> {
                             width: 150,
                             height: 50,
                             child: TextField(
-                              style: TextStyle(fontSize: 13),
+                              textAlign: TextAlign.center,
+                              //style: TextStyle(fontSize: 13),
                               maxLines: 2, //2 scrollabale linesrr
                               controller: controllers[index][4],
                               //focusNode: nextFocus,
-                              decoration: InputDecoration(hintText: '...'),
+                              decoration:
+                                  const InputDecoration(hintText: '...'),
                               onChanged: (value) {
                                 updateCanAddRow();
                               },
@@ -527,13 +558,14 @@ class _PageVeicoloState extends State<PageVeicolo> {
                           //NOTENOTENOTE
                           //FIRMAFIRMA
                           SizedBox(
-                            width: 50,
+                            width: 75,
                             height: 50,
                             child: TextField(
+                              textAlign: TextAlign.center,
                               controller: controllers[index][5],
                               //focusNode: nextFocus,
                               decoration:
-                                  InputDecoration(hintText: 'Enter data'),
+                                  const InputDecoration(hintText: 'Autista'),
 
                               onChanged: (value) {
                                 updateCanAddRow();
@@ -561,28 +593,16 @@ class _PageVeicoloState extends State<PageVeicolo> {
             ),
           ),
         ),
-  //floatingActionButton//floatingActionButton      
+        //floatingActionButton//floatingActionButton
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             addRow();
           },
-          child: Icon(Icons.add),
           backgroundColor: canAddRow ? Colors.blue : Colors.grey,
+          child: const Icon(Icons.add),
 
           // Disable the button when the last row is not fully filled
           // with data in all columns),
         ));
   }
-}
-
-class ScreenSizeService {
-  final BuildContext context;
-
-  const ScreenSizeService(
-    this.context,
-  );
-
-  Size get size => MediaQuery.of(context).size;
-  double get height => size.height;
-  double get width => size.width;
 }

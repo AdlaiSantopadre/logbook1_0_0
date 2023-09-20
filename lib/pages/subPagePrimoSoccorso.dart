@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//serve x ScreenSizeService
-import 'package:logbook1_0_0/models/modelTableDynamic.dart'; 
+import '../widgets/screenSizeService.dart'; 
 
 class subPagePrimoSoccorso extends StatelessWidget {
   const subPagePrimoSoccorso({super.key});
@@ -16,13 +15,13 @@ class subPagePrimoSoccorso extends StatelessWidget {
           'Pacchetto Medicazione',
           maxLines: 1,
         ),
-        actions: [
-          /*IconButton(
+        /*actions: [
+          IconButton(
               icon: const Icon(Icons.home_outlined),
               onPressed: () {
                 Navigator.pop(context);
-              }),*/
-        ],
+              }),
+        ],*/
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

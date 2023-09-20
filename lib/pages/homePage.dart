@@ -95,7 +95,7 @@ class HomePage extends HookConsumerWidget {
       ///DRAWER ///DRAWER //
       drawer: Drawer(
         backgroundColor: Colors.blue.shade50,
-        // Add a ListView to the drawer. This ensures the user can scroll
+        // Add a ListView to the drawer...this ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.https://flutter.github.io/samples/add_a_drawer_to_a_screen.html
         child: ListView(
@@ -127,7 +127,7 @@ class HomePage extends HookConsumerWidget {
                 color: Colors.blueGrey,
               ),
               title: const Text(
-                'Veicolo',
+                'Rapporto Percorrenze',
                 textAlign: TextAlign.center,
               ),
               selected: selectedIndex == 1,
@@ -215,7 +215,7 @@ class HomePage extends HookConsumerWidget {
           ],
         ),
       ),
-      //////////*DRAWER DRAWER*///////////////
+//////////*DRAWER DRAWER*///////////////
       ////////////*APPBARAPPBAR*//////////////
       appBar: AppBar(
         backgroundColor: Colors.cyan[200],
