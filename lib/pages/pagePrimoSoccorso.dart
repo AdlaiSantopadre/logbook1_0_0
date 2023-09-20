@@ -1,10 +1,12 @@
 // ignore_for_file: file_names
 
+import 'package:logbook1_0_0/pages/homePage.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logbook1_0_0/pages/subPagePrimoSoccorso.dart';
-void main() {
+import 'package:logbook1_0_0/providers.dart';
+/*void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -27,21 +29,29 @@ class _MyAppState extends State<MyApp> {
       home: const PagePrimoSoccorso(),
     );
   }
-}
+} */
 
 const _uuid = Uuid(); //ref pub.dev\uuid-3.0.7\lib\uuid.dart
 
 //provider to manage the total progress in app
-final totalProgressProvider = StateProvider<int>((ref) => 0);
+//final totalProgressProvider = StateProvider<int>((ref) => 0);
 bool _incremented = false;
 
 final checkProvider = StateNotifierProvider<Checklist, List<Check>>(
   (ref) => Checklist([
     Check(_uuid.v4(), "Guanti sterili monouso in nitrile (2 paia).", false),
-    Check(_uuid.v4(), "Flacone di soluzione cutanea di iodopovidone al 10% di iodio da 125 ml.", false),
-    Check(_uuid.v4(), "Flacone di soluzione fisiologica (sodio cloruro 0,9%) da 250 ml (1).", false ),
-    Check(_uuid.v4(), "Compresse di garza sterile 18 x 40 in buste singole (1).", false),
-    Check(_uuid.v4(), "Compresse di garza sterile 10 x 10 in buste singole (3)", false),
+    Check(
+        _uuid.v4(),
+        "Flacone di soluzione cutanea di iodopovidone al 10% di iodio da 125 ml.",
+        false),
+    Check(
+        _uuid.v4(),
+        "Flacone di soluzione fisiologica (sodio cloruro 0,9%) da 250 ml (1).",
+        false),
+    Check(_uuid.v4(),
+        "Compresse di garza sterile 18 x 40 in buste singole (1).", false),
+    Check(_uuid.v4(), "Compresse di garza sterile 10 x 10 in buste singole (3)",
+        false),
     /*Check(_uuid.v4(), "Item 6", false),
     Check(_uuid.v4(), "Item 7", false),
     Check(_uuid.v4(), "Item 8", false),
@@ -94,8 +104,8 @@ class CheckListView extends ConsumerWidget {
                   ),
                   Expanded(
                     child: Text(checks[index].title,
-                      overflow: TextOverflow.visible,
-                      maxLines: 2,
+                        overflow: TextOverflow.visible,
+                        maxLines: 2,
                         style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 ],
@@ -112,7 +122,6 @@ class CheckListView extends ConsumerWidget {
 
 class PagePrimoSoccorso extends HookConsumerWidget {
   const PagePrimoSoccorso({super.key});
-  
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -120,11 +129,11 @@ class PagePrimoSoccorso extends HookConsumerWidget {
 
     final checks = ref.watch(checkProvider);
     final bool allDone = checks.every((check) => check.checked);
-    
 
     void escape(bool allDone) {
       if (allDone && (!_incremented)) {
-        ref.watch(totalProgressProvider.notifier).state += 10;
+        ref.read(totalProgressProvider.notifier).state += 10;
+        debugPrint('Building $runtimeType');
         _incremented = !_incremented;
       }
     }
@@ -137,7 +146,10 @@ class PagePrimoSoccorso extends HookConsumerWidget {
             icon: const Icon(Icons.home_outlined),
             onPressed: () {
               if (allDone) {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               }
             },
           ),
@@ -145,11 +157,11 @@ class PagePrimoSoccorso extends HookConsumerWidget {
             tooltip: "disposizioni di riferimento",
             icon: const Icon(Icons.info),
             onPressed: () {
-                Navigator.push(
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const subPagePrimoSoccorso()),
-                                );
-       
+                MaterialPageRoute(
+                    builder: (context) => const subPagePrimoSoccorso()),
+              );
             },
           ),
         ],
@@ -171,7 +183,8 @@ class PagePrimoSoccorso extends HookConsumerWidget {
       //floatingActionButton//floatingActionButton
       floatingActionButton: FloatingActionButton(
         tooltip: 'Blue se completato',
-        backgroundColor: (allDone && (!_incremented)) ? Colors.blue : Colors.grey,
+        backgroundColor:
+            (allDone && (!_incremented)) ? Colors.blue : Colors.grey,
         onPressed: () {
           escape(allDone);
         },

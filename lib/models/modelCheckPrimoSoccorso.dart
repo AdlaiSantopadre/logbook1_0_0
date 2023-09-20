@@ -3,6 +3,7 @@
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logbook1_0_0/providers.dart' ;
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -32,7 +33,7 @@ class _MyAppState extends State<MyApp> {
 const _uuid = Uuid(); //ref pub.dev\uuid-3.0.7\lib\uuid.dart
 
 //provider to manage the total progress in app
-final totalProgressProvider = StateProvider<int>((ref) => 0);
+//final totalProgressProvider = StateProvider<int>((ref) => 0);
 bool _incremented = false;
 
 final checkProvider = StateNotifierProvider<Checklist, List<Check>>(

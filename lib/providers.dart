@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:logbook1_0_0/models/modelUserCredential.dart';
 import 'package:logbook1_0_0/widgets/authentication copy.dart';
 
-final totalProgressProvider = StateProvider<int>((ref) => 0);
+final totalProgressProvider = StateProvider<int>((ref) => 1);
 //used to manage the total progress ./
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
@@ -26,12 +26,7 @@ final databaseProvider = Provider<Future<Database>>((ref) async {
   return await databaseHelper.initDatabase();
 });
 
-/*final exampleProvider = Provider<int>((ref) {
-  final database = ref.watch(databaseProvider);
-  // Use the database connection here
-  // ...
-});
-*/
+
 
 //USER REGISTRATION PROVIDER
 //provider for registering new users in the database:

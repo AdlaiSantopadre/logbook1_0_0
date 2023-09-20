@@ -114,7 +114,7 @@ class PopupWindow extends ConsumerWidget {
                   ),
                   onPressed: () {
                     
-                     ref.read(passwordVisibilityProvider.notifier).toggleVisibility();
+                   //  ref.read(passwordVisibilityProvider.notifier).toggleVisibility();
                     },
                     
                   

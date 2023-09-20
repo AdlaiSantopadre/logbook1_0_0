@@ -35,7 +35,9 @@ class LogbookApp extends StatelessWidget {
         title: 'Logbook HomePage',
         debugShowCheckedModeBanner: true, //mostra il banner debug mode
         theme: ThemeData(
-            primarySwatch: Colors.cyan, canvasColor: Colors.cyan[50],colorSchemeSeed: Colors.blue[600],),
+           // primarySwatch: Colors.cyan,
+             canvasColor: Colors.cyan[50],
+            colorSchemeSeed: Colors.blue[600],),
         home: HomePage()); // widget for the default route of the app
   }
 }

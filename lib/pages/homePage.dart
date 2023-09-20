@@ -21,8 +21,6 @@ being that it has an extra parameter on its build method: the "ref" object.*/
 class HomePage extends HookConsumerWidget {
   HomePage({Key? key}) : super(key: key);
 
-
-
   //String? _username = '.....';
   // String? _password;
   DateTime fixDate = DateTime.now();
@@ -79,15 +77,16 @@ class HomePage extends HookConsumerWidget {
 
     final selectedIndex = ref
         .watch(selectedIndexProvider); // Riverpod provider for selected index
-    final _username =  ref.watch(usernameProvider); // Riverpod provider for username
-     final _password =  ref.watch(passwordProvider);    
+    final username =
+        ref.watch(usernameProvider); // Riverpod provider for username
+    final password = ref.watch(passwordProvider);
 
     final dateController =
         useTextEditingController(); // Use hooks for TextEditingController
 
     // final passwordVisibility = useState<bool>(false); // Use hooks for password visibility
 
-   // final authentication = ref.watch(authenticationProvider);
+    // final authentication = ref.watch(authenticationProvider);
 
     return Scaffold(
       //Creo un visual scaffold con appbar e floatingActionButton e drawer
@@ -144,7 +143,7 @@ class HomePage extends HookConsumerWidget {
                 color: Colors.blueGrey,
               ),
               title: const Text(
-                'PrimoSoccorso',
+                'Equipaggiamento',
                 textAlign: TextAlign.center,
               ),
               selected: selectedIndex == 2,
@@ -160,11 +159,11 @@ class HomePage extends HookConsumerWidget {
             ),
             ListTile(
               leading: const Icon(
-                Icons.car_crash,
-                color: Colors.blueGrey,
+                Icons.health_and_safety_outlined,
+                color: Colors.redAccent,
               ),
               title: const Text(
-                'Equipaggiamento',
+                'PrimoSoccorso',
                 textAlign: TextAlign.center,
               ),
               selected: selectedIndex == 3,
@@ -180,8 +179,8 @@ class HomePage extends HookConsumerWidget {
             ),
             ListTile(
               leading: const Icon(
-                Icons.safety_check,
-                color: Colors.red,
+                Icons.shield_sharp,
+                color: Colors.green,
               ),
               title: const Text(
                 'DPI',
@@ -216,24 +215,23 @@ class HomePage extends HookConsumerWidget {
       //////////*DRAWER DRAWER*///////////////
       ////////////*APPBARAPPBAR*//////////////
       appBar: AppBar(
-      backgroundColor: Colors.cyan[200] ,
-        flexibleSpace: Image.asset('lib/assets/B1logo.png',alignment: Alignment.centerRight),
+        backgroundColor: Colors.cyan[200],
+        flexibleSpace: Image.asset('lib/assets/B1logo.png',
+            alignment: Alignment.centerRight),
         titleSpacing: 0.0,
         title: Container(
           padding: EdgeInsets.all(8.0),
-          decoration:BoxDecoration(
-                    border: Border.all(
-                      color: Colors.blue,
-                      width: 3,),
-                    
-                    borderRadius: BorderRadius.circular(12),
-                      ),
-
-                    
-                   
-            child: const Text("Diario di bordo",
-              style: TextStyle(
-              //backgroundColor:Color.fromARGB(255, 66, 20, 235),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.blue,
+              width: 3,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            "√ Diario di bordo",
+            style: TextStyle(
+              backgroundColor: Colors.blue,
               color: Colors.white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Roboto',
@@ -245,36 +243,27 @@ class HomePage extends HookConsumerWidget {
 
         //////////*APPBARAPPBAR*//////////////
       ),
-      /* body: Consumer(
-        builder: (context, ref, child) {
-          ref.listen(colorProvider, ((previous, next) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Nuove colore: $next!"),
-            ));
-          }));
 
-          return child!;
-        },*/
 ///////BODYBODY/////////BODYBODY//
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             verticalDirection: VerticalDirection.down,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(2.0),
                 decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.blue,
-                      width: 3,
+                      width: 2,
                     ),
                     borderRadius: BorderRadius.circular(12)),
                 child: TextField(
                     //autofocus: true,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 15),
                     textAlign: TextAlign.center,
                     controller: dateController,
                     //[index][0],
@@ -333,9 +322,9 @@ class HomePage extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.manage_accounts),
-                          Text('Autenticazione richiesta' ),
+                          Text('Autenticazione richiesta'),
                         ],
-                      ),//,
+                      ), //,
                     ),
                     /*ElevatedButton(
                       onPressed: () {
@@ -352,9 +341,9 @@ class HomePage extends HookConsumerWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('Username: $_username',
+                          Text('Username: $username',
                               style: TextStyle(fontSize: 14)),
-                              Text('Password: $_password',
+                          Text('Password: $password',
                               style: TextStyle(fontSize: 14)),
                         ],
                       ),
@@ -374,13 +363,33 @@ class HomePage extends HookConsumerWidget {
                 ),
               ),
 
-              const Text(' White Space            '),
+              Text(
+                  "Task Progress: ${ref.watch(totalProgressProvider.notifier).state}"),
               //ProgressIndicatorWidget(_totalProgress),
+              Consumer(
+                builder: (context, ref, child) {
+                  final totalProgress = ref.watch(totalProgressProvider);
+                  Text(
+                      "Task Progress: ${ref.watch(totalProgressProvider.notifier).state}");
+                  return ProgressIndicatorWidget(totalProgress);
+                },
+              ),
+
               const Text('lista scadenze'),
             ],
           ),
         ),
       ),
+      /* child: Consumer(
+        builder: (context, ref, child) {
+          ref.listen(colorProvider, ((previous, next) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Nuove colore: $next!"),
+            ));
+          }));
+
+          return child!;
+        },*/
 ////////BODYBODY/////////BODYBODY//
       floatingActionButton: FloatingActionButton(
         onPressed: () {
