@@ -47,7 +47,7 @@ const subPageVeicolo({super.key});
                    
                      child:RichText(
                             text: TextSpan(
-                                  children: ''.split('.').map((textSegment) {
+                                  children: 'Il Rapporto Percorrenze va compilato in ogni sua voce avendo cura di selezionare il mese di riferimento che è la chiave di accesso per consultare anche le righe già compilate. Ad ogni utilizzo distinto compilare in particolare una riga con i dati di partenza e di rientro, aggiungendo eventuali note riguardanti lo stato di della carrozzeria, luci e fanaleria, spie del cruscotto accese o messaggi dalla centralina, ed eventuali anomalie nei livelli dei liquidi di consumo quali olio motore, liquido dei freni etc. Controllare anche pneumatici e usura del battistrada. '.split('.').map((textSegment) {
                                   return TextSpan(
                                   style:const TextStyle(color:Colors.cyan,fontSize:20),
                                   text: textSegment + '.', // Re-add the dot that was removed by split
