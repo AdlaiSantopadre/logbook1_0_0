@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:logbook1_0_0/models/modelUserCredential.dart';
 import 'package:logbook1_0_0/widgets/authentication copy.dart';
 
-final totalProgressProvider = StateProvider<int>((ref) => 1);
+final totalProgressProvider = StateProvider<int>((ref) => 5);
 //used to manage the total progress ./
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);

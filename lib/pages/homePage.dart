@@ -26,9 +26,8 @@ class HomePage extends HookConsumerWidget {
   DateTime fixDate = DateTime.now();
   FocusNode nextFocus = FocusNode();
   String formattedDate = DateFormat('dd-MM-yyyy ').format(DateTime.now());
-
-
   
+
 // (show ListTile index number , name)  _widgetOptions[_selectedIndex],
   void _onItemTapped(int index, WidgetRef ref) {
     ref.read(selectedIndexProvider.notifier).state = index;
@@ -39,8 +38,7 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('Building $runtimeType');
 
-   final totalProgress = ref
-       .watch(totalProgressProvider);
+    final totalProgress = ref.watch(totalProgressProvider);
 
     final selectedIndex = ref
         .watch(selectedIndexProvider); // Riverpod provider for selected index
@@ -56,7 +54,6 @@ class HomePage extends HookConsumerWidget {
     // final authentication = ref.watch(authenticationProvider);
 
     return Scaffold(
-    
       ///DRAWER ///DRAWER //
       drawer: Drawer(
         backgroundColor: Colors.blue.shade50,
@@ -97,11 +94,14 @@ class HomePage extends HookConsumerWidget {
               ),
               selected: selectedIndex == 1,
               onTap: () {
-                // Update the state of the app
+                // Update the state
                 _onItemTapped(1, ref);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PageVeicolo(title: 'Rapporto Percorrenze',)),
+                  MaterialPageRoute(
+                      builder: (context) => const PageVeicolo(
+                            title: 'Rapporto Percorrenze',
+                          )),
                 );
               },
             ),
@@ -116,7 +116,7 @@ class HomePage extends HookConsumerWidget {
               ),
               selected: selectedIndex == 2,
               onTap: () {
-                // Update the state of the app
+                // Update the state
                 _onItemTapped(2, ref);
                 Navigator.push(
                   context,
@@ -136,7 +136,7 @@ class HomePage extends HookConsumerWidget {
               ),
               selected: selectedIndex == 3,
               onTap: () {
-                // Update the state of the app
+                // Update the state
                 _onItemTapped(3, ref);
                 Navigator.push(
                   context,
@@ -188,18 +188,13 @@ class HomePage extends HookConsumerWidget {
             alignment: Alignment.centerRight),
         titleSpacing: 0.0,
         title: Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            /*border: Border.all(
-              color: Colors.blue,
-              width: 3,
-            ),*/
             borderRadius: BorderRadius.circular(12),
           ),
           child: const Text(
             "√ Diario di bordo",
             style: TextStyle(
-              //backgroundColor: Colors.blue,
               color: Colors.white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Roboto',
@@ -222,7 +217,7 @@ class HomePage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                padding: EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(4.0),
                 decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.blue,
@@ -231,7 +226,7 @@ class HomePage extends HookConsumerWidget {
                     borderRadius: BorderRadius.circular(12)),
                 child: TextField(
                     //autofocus: true,
-                    style: TextStyle(fontSize: 15),
+                    style: const TextStyle(fontSize: 15),
                     textAlign: TextAlign.center,
                     controller: dateController,
                     //[index][0],
@@ -265,8 +260,8 @@ class HomePage extends HookConsumerWidget {
                         String formattedDate =
                             DateFormat('dd-MM-yyyy ').format(fixDate);
                         dateController.text = formattedDate;
-                        FocusScope.of(context).requestFocus(
-                            nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                      //  FocusScope.of(context).requestFocus(
+                      //      nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
                       }
                     }), //onTap
               ),
@@ -305,14 +300,14 @@ class HomePage extends HookConsumerWidget {
                         border: Border.all(width: 4, color: Colors.blue),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text('Username: $username',
-                              style: TextStyle(fontSize: 14)),
+                              style: const TextStyle(fontSize: 14)),
                           Text('Password: $password',
-                              style: TextStyle(fontSize: 14)),
+                              style: const TextStyle(fontSize: 14)),
                         ],
                       ),
                     ),
@@ -333,26 +328,26 @@ class HomePage extends HookConsumerWidget {
 
               Container(
                 decoration: BoxDecoration(
-                        border: Border.all(width: 4, color: Colors.blue),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.all(8.0),
+                  border: Border.all(width: 4, color: Colors.blue),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
                         "Stato avanzamento: ${ref.watch(totalProgressProvider.notifier).state} %"),
-                  //ProgressIndicatorWidget(_totalProgress),
-                Consumer(
-                  builder: (context, ref, child) {
-                    //final totalProgress = ref.watch(totalProgressProvider);
-                    return ProgressIndicatorWidget(totalProgress);
-                  },
-                ),],
+                    //ProgressIndicatorWidget(_totalProgress),
+                    Consumer(
+                      builder: (context, ref, child) {
+                        //final totalProgress = ref.watch(totalProgressProvider);
+                        return ProgressIndicatorWidget(totalProgress);
+                      },
+                    ),
+                  ],
                 ),
               ),
-              
 
               const Text('lista scadenze'),
             ],
@@ -372,8 +367,35 @@ class HomePage extends HookConsumerWidget {
 ////////BODYBODY/////////BODYBODY//
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.blue.shade900,
+        backgroundColor:
+            ((ref.watch(totalProgressProvider.notifier).state >= 80)) ? Colors.blue.shade200 : Colors.grey.shade400,
         onPressed: () {
-          // da implementare Exit
+          if (ref.watch(totalProgressProvider.notifier).state >= 80) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Exit App'),
+                    content: const Text('Buon lavoro, hai completato tutto.OK?'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('No'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Yes'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          // Close the app when "Yes" is pressed
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                });
+          }
         },
         tooltip: 'Ok,puoi iniziare',
         child: const Icon(Icons.start_sharp),

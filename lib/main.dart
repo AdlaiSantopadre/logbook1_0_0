@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
 //import 'package:intl/intl.dart'; //per utilizare DateTime
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-
 import  'package:logbook1_0_0/pages/homePage.dart';
-//import 'package:logbook1_0_0/pages/pageEquipaggiamento.dart';
-//import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
-//import 'package:logbook1_0_0/pages/pageVeicolo.dart';
-//import 'package:logbook1_0_0/pages/pageDPI.dart';
-//import 'package:logbook1_0_0/models/progressIndicator.dart';
-
-
-
 
 /*void main() {
   runApp(
