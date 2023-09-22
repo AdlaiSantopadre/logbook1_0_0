@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
 //import 'package:intl/intl.dart'; //per utilizare DateTime
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import  'package:logbook1_0_0/pages/homePage.dart';
+import 'package:logbook1_0_0/pages/pageVeicolo.dart';
 
 /*void main() {
   runApp(
@@ -40,7 +42,8 @@ class LogbookApp extends StatelessWidget {//MyApp is  LogbookApp!!!
             ),
             // Other theme properties
           ),
-        home: HomePage()); // widget for the default route of the app
+     home: PageVeicolo(title: '',));
+       // home: HomePage()); // widget for the default route of the app
   }
 }
 

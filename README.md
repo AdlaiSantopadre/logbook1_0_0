@@ -6,7 +6,7 @@ Prima di iniziare la specifica attività lavorativa (ad es. la
 manutenzione programmata su un impianto *in itinere*), ogni giorno devo
 ottemperare a tutta una serie di compiti - in
 sintesi  di verifica e controllo degli equipaggiamenti e
-dell\'autoveicolo che andrò ad utilizzare).
+dell\'autoveicolo che andrò ad utilizzare.
 
 Sono moduli e liste di controllo da compilare in forma cartacea,
 riconducibili a Ordini di servizio o Norme più in generale. Come autista

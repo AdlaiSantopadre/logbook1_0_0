@@ -26,7 +26,6 @@ class HomePage extends HookConsumerWidget {
   DateTime fixDate = DateTime.now();
   FocusNode nextFocus = FocusNode();
   String formattedDate = DateFormat('dd-MM-yyyy ').format(DateTime.now());
-  
 
 // (show ListTile index number , name)  _widgetOptions[_selectedIndex],
   void _onItemTapped(int index, WidgetRef ref) {
@@ -80,7 +79,10 @@ class HomePage extends HookConsumerWidget {
                 // Update the state of the app
                 _onItemTapped(0, ref);
                 // Then close the drawer
-                Navigator.pop(context);
+                MaterialPageRoute(
+                    builder: (context) =>  HomePage( ));
+                          
+                       
               },
             ),
             ListTile(
@@ -99,7 +101,7 @@ class HomePage extends HookConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PageVeicolo(
+                      builder: (context) => PageVeicolo(
                             title: 'Rapporto Percorrenze',
                           )),
                 );
@@ -260,8 +262,8 @@ class HomePage extends HookConsumerWidget {
                         String formattedDate =
                             DateFormat('dd-MM-yyyy ').format(fixDate);
                         dateController.text = formattedDate;
-                      //  FocusScope.of(context).requestFocus(
-                      //      nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                        //  FocusScope.of(context).requestFocus(
+                        //      nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
                       }
                     }), //onTap
               ),
@@ -368,7 +370,9 @@ class HomePage extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.blue.shade900,
         backgroundColor:
-            ((ref.watch(totalProgressProvider.notifier).state >= 80)) ? Colors.blue.shade200 : Colors.grey.shade400,
+            ((ref.watch(totalProgressProvider.notifier).state >= 80))
+                ? Colors.blue.shade200
+                : Colors.grey.shade400,
         onPressed: () {
           if (ref.watch(totalProgressProvider.notifier).state >= 80) {
             showDialog(
@@ -376,7 +380,8 @@ class HomePage extends HookConsumerWidget {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Exit App'),
-                    content: const Text('Buon lavoro, hai completato tutto.OK?'),
+                    content:
+                        const Text('Buon lavoro, hai completato tutto.OK?'),
                     actions: <Widget>[
                       TextButton(
                         child: const Text('No'),
