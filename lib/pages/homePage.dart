@@ -168,7 +168,7 @@ class HomePage extends HookConsumerWidget {
                 );
               },
             ),
-            ListTile(
+        /**  ListTile(
               title: const Text('Dotazioni Antincendio'),
               selected: selectedIndex == 5,
               onTap: () {
@@ -180,7 +180,7 @@ class HomePage extends HookConsumerWidget {
                       builder: (context) => const PageDotazioniAntincendio()),
                 );
               },
-            ),
+            ),*/  
           ],
         ),
       ),
@@ -219,152 +219,150 @@ class HomePage extends HookConsumerWidget {
             minWidth: screenWidth,
             minHeight: screenHeight,
           ),
-          child:Center(
-        child: Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            verticalDirection: VerticalDirection.down,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(4.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.blue,
-                      width: 3,
-                    ),
-                    borderRadius: BorderRadius.circular(12)),
-                child: TextField(
-                    //autofocus: true,
-                    style: const TextStyle(fontSize: 15),
-                    textAlign: TextAlign.center,
-                    controller: dateController,
-                    //[index][0],
-
-                    decoration: InputDecoration(
-                        //hintText: 'percorrenze di',
-                        border: InputBorder.none,
-                        suffixIcon: const Icon(
-                            Icons.calendar_today), //spostare onTap sulla Icona
-                        // Use of hooks to set the controller text
-                        labelText: 'Data di oggi $formattedDate'),
-                    onTap: () async {
-                      // Show date picker
-                      final pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: fixDate,
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                      );
-
-                      if (pickedDate != null) {
-                        // Use hooks to update the controller text
-
-                        fixDate = DateTime(
-                          pickedDate.year,
-                          pickedDate.month,
-                          pickedDate.day,
-                          //pickedTime.hour,
-                          //pickedTime.minute,
-                        );
-                        String formattedDate =
-                            DateFormat('dd-MM-yyyy ').format(fixDate);
-                        dateController.text = formattedDate;
-                        //  FocusScope.of(context).requestFocus(
-                        //      nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
-                      }
-                    }), //onTap
-              ),
-
-              //inserire qui il widget per il la autenticazione
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.blue,
-                      width: 3,
-                    ),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Authentication().openPopupWindow(context, ref);
-                      },
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.manage_accounts),
-                          Text('Autenticazione richiesta'),
-                        ],
-                      ), //,
-                    ),
-                    /*ElevatedButton(
-                      onPressed: () {
-                        _username = ref.watch(usernameProvider.notifier).state;
-                      },
-                      child: Text('Autenticazione richiesta'),
-                    ),*/
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 4, color: Colors.blue),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text('Username: $username',
-                              style: const TextStyle(fontSize: 14)),
-                          Text('Password: $password',
-                              style: const TextStyle(fontSize: 14)),
-                        ],
-                      ),
-                    ),
-
-                    /* Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Password: $_password',
-                      style: TextStyle(fontSize: 14)),
+          child:Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              verticalDirection: VerticalDirection.down,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(4.0),
                   decoration: BoxDecoration(
-                    
-                    border: Border.all(width: 4,color: Colors.blue),
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 3,
+                      ),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: TextField(
+                      //autofocus: true,
+                      style: const TextStyle(fontSize: 15),
+                      textAlign: TextAlign.center,
+                      controller: dateController,
+                      //[index][0],
+
+                      decoration: InputDecoration(
+                          //hintText: 'percorrenze di',
+                          border: InputBorder.none,
+                          suffixIcon: const Icon(
+                              Icons.calendar_today), //spostare onTap sulla Icona
+                          // Use of hooks to set the controller text
+                          labelText: 'Data di oggi $formattedDate'),
+                      onTap: () async {
+                        // Show date picker
+                        final pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: fixDate,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+
+                        if (pickedDate != null) {
+                          // Use hooks to update the controller text
+
+                          fixDate = DateTime(
+                            pickedDate.year,
+                            pickedDate.month,
+                            pickedDate.day,
+                            //pickedTime.hour,
+                            //pickedTime.minute,
+                          );
+                          String formattedDate =
+                              DateFormat('dd-MM-yyyy ').format(fixDate);
+                          dateController.text = formattedDate;
+                          //  FocusScope.of(context).requestFocus(
+                          //      nextFocus); //mi permette di uscire senza avere lo scope e fcendo sparire la tastiera
+                        }
+                      }), //onTap
+                ),
+
+                //inserire qui il widget per il la autenticazione
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 3,
+                      ),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Authentication().openPopupWindow(context, ref);
+                        },
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.manage_accounts),
+                            Text('Autenticazione richiesta'),
+                          ],
+                        ), //,
+                      ),
+                      /*ElevatedButton(
+                        onPressed: () {
+                          _username = ref.watch(usernameProvider.notifier).state;
+                        },
+                        child: Text('Autenticazione richiesta'),
+                      ),*/
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 4, color: Colors.blue),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text('Username: $username',
+                                style: const TextStyle(fontSize: 14)),
+                            Text('Password: $password',
+                                style: const TextStyle(fontSize: 14)),
+                          ],
+                        ),
+                      ),
+
+                      /* Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Password: $_password',
+                        style: TextStyle(fontSize: 14)),
+                    decoration: BoxDecoration(
+                      
+                      border: Border.all(width: 4,color: Colors.blue),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),*/
+                    ],
+                  ),
+                ),
+
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 4, color: Colors.blue),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                ),*/
-                  ],
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                          "Stato avanzamento: ${ref.watch(totalProgressProvider.notifier).state} %"),
+                      //ProgressIndicatorWidget(_totalProgress),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          //final totalProgress = ref.watch(totalProgressProvider);
+                          return ProgressIndicatorWidget(totalProgress);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 4, color: Colors.blue),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                        "Stato avanzamento: ${ref.watch(totalProgressProvider.notifier).state} %"),
-                    //ProgressIndicatorWidget(_totalProgress),
-                    Consumer(
-                      builder: (context, ref, child) {
-                        //final totalProgress = ref.watch(totalProgressProvider);
-                        return ProgressIndicatorWidget(totalProgress);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-
-             //TO DO  const Text('lista scadenze'),
-            ],
+               //TO DO  const Text('lista scadenze'),
+              ],
+            ),
           ),
-        ),
-      ),
         ),
       ),
       
