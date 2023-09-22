@@ -42,8 +42,8 @@ class LogbookApp extends StatelessWidget {//MyApp is  LogbookApp!!!
             ),
             // Other theme properties
           ),
-     home: PageVeicolo(title: '',));
-       // home: HomePage()); // widget for the default route of the app
+     //home: PageVeicolo(title: '',));
+        home: HomePage()); // widget for the default route of the app
   }
 }
 

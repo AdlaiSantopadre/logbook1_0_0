@@ -10,6 +10,7 @@ import 'package:logbook1_0_0/pages/pageDPI.dart';
 import 'package:logbook1_0_0/models/progressIndicator.dart';
 import 'package:logbook1_0_0/widgets/authentication.dart';
 import 'package:logbook1_0_0/providers.dart';
+import 'package:logbook1_0_0/widgets/screenSizeService.dart';
 
 /*class HomePage extends StatefulWidget { 
   @override
@@ -51,8 +52,9 @@ class HomePage extends HookConsumerWidget {
     // final passwordVisibility = useState<bool>(false); // Use hooks for password visibility
 
     // final authentication = ref.watch(authenticationProvider);
-
-    return Scaffold(
+      final screenWidth = ScreenSizeService(context).width;
+      final screenHeight = ScreenSizeService(context).height;
+      return Scaffold(
       ///DRAWER ///DRAWER //
       drawer: Drawer(
         backgroundColor: Colors.blue.shade50,
@@ -210,7 +212,14 @@ class HomePage extends HookConsumerWidget {
       ),
 
 ///////BODYBODY/////////BODYBODY//
-      body: Center(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: screenWidth,
+            minHeight: screenHeight,
+          ),
+          child:Center(
         child: Container(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -351,11 +360,14 @@ class HomePage extends HookConsumerWidget {
                 ),
               ),
 
-              const Text('lista scadenze'),
+             //TO DO  const Text('lista scadenze'),
             ],
           ),
         ),
       ),
+        ),
+      ),
+      
       /* child: Consumer(
         builder: (context, ref, child) {
           ref.listen(colorProvider, ((previous, next) {

@@ -11,11 +11,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
-//devo modificare la logica affinchè dopo aver scelto
-// il mese  carico la tabella e aggiungo una riga vuota .
-//Poi con il riempimento della riga salvo la tabella con il floating action, esco dalla pagina
-// invrementando il valore di progressIndicator con DONE
-
 GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 //Registro Annotazioni e Percorrenze Veicolo
 
@@ -29,7 +24,7 @@ class PageVeicolo extends ConsumerWidget {
   List<List<TextEditingController>> controllers = [];
   FocusNode nextFocus = FocusNode();
   FocusNode meseFocusNode = FocusNode();
-  bool canAddRow = false;
+  bool canAddRow = true;
   DateTime selectedInitDate = DateTime.now();
   TimeOfDay selectedInitTime = TimeOfDay.now();
   DateTime selectedEndDate = DateTime.now();
@@ -50,7 +45,7 @@ class PageVeicolo extends ConsumerWidget {
     'Dicembre',
   ];
   bool isNewRowFilled = false;
-  bool shouldIncreaseTotal = false;
+  bool shouldIncreaseTotal = true;
   bool isTotalProgressIncreased = false;
 
   @override
@@ -64,9 +59,11 @@ class PageVeicolo extends ConsumerWidget {
     void updateCanAddRow() {
       canAddRow = controllers.isNotEmpty &&
           controllers.last.every((controller) => controller.text.isNotEmpty);
+      debugPrint("updated $canAddRow");
     }
 
     void addNewRow() {
+      debugPrint("add new row");
       controllers.add([
         TextEditingController(),
         TextEditingController(),
@@ -78,8 +75,17 @@ class PageVeicolo extends ConsumerWidget {
       updateCanAddRow();
     }
 
-    addNewRow();
-    updateCanAddRow();
+    void addRow() {
+      if (canAddRow) {
+        addNewRow();
+        
+
+        //isNewRowFilled = false;
+      }
+      debugPrint('$canAddRow');
+    }
+
+    // addRow();
 
     void saveDataToFile(String fileName) async {
       // Serialize your data (e.g., as JSON)
@@ -122,7 +128,6 @@ class PageVeicolo extends ConsumerWidget {
             controllers[i][j].text = decodedData[i][j];
           }
         }
-
         updateCanAddRow();
         if (shouldIncreaseTotal) {}
       } catch (e) {
@@ -140,14 +145,6 @@ class PageVeicolo extends ConsumerWidget {
     }
     super.dispose();
   }*/
-
-    void addRow() {
-      if (canAddRow) {
-        addNewRow();
-        isNewRowFilled = true;
-      }
-      debugPrint('$canAddRow');
-    }
 
     void handleOnEditingComplete() {
       if ((isNewRowFilled || shouldIncreaseTotal) &&
@@ -169,7 +166,7 @@ class PageVeicolo extends ConsumerWidget {
       appBar: AppBar(
         title: const Text(
           "Rapporto Percorrenze",
-          textScaleFactor: 1,
+          textScaleFactor: 0.8,
         ),
         actions: [
           IconButton(
@@ -215,10 +212,9 @@ class PageVeicolo extends ConsumerWidget {
             scrollDirection: Axis.horizontal,
             child: Column(children: [
               //intestazioni//
-              const Row(children: [
-                Text("=>>         AUTOSTRADE// per l'Italia       =>>"),
-                Text("Direzione VII Tronco"),
-              ]),
+              Text(
+                "=>>=>> =>>   =>>     =>>          =>>       =>>     =>>       =>>",
+              ),
               Row(children: [
                 SizedBox(
                   height: 80,
@@ -227,8 +223,7 @@ class PageVeicolo extends ConsumerWidget {
                       key: key,
                       suggestions: validMonthNames,
                       decoration: const InputDecoration(
-                        labelText:
-                            'Al mese scelto sono associati i dati salvati ',
+                        labelText: 'Al mese scelto sono associati i dati  ',
                       ),
                       itemBuilder: (context, suggestion) => ListTile(
                             title: Text(suggestion),
@@ -237,7 +232,7 @@ class PageVeicolo extends ConsumerWidget {
                       itemFilter: (suggestion, input) => suggestion
                           .toLowerCase()
                           .startsWith(input.toLowerCase()),
-                      autofocus: true,
+                      //autofocus: true,
                       focusNode: meseFocusNode,
                       controller: fileMese,
                       clearOnSubmit: false,
@@ -250,6 +245,8 @@ class PageVeicolo extends ConsumerWidget {
                       itemSubmitted: (value) {
                         // Clear the TextField
                         fileMese.text = value;
+                        //addNewRow();
+                        debugPrint("mese scelto");
 
                         // Print an error message
                       } /* else {fileMese.clear();FocusScope.of(context).requestFocus(FocusNode());
@@ -545,7 +542,6 @@ class PageVeicolo extends ConsumerWidget {
                             /** */ onEditingComplete: () {
                               handleOnEditingComplete();
                               //updateCanAddRow();
-                              addNewRow();
 
                               controllers[index + 1][1] = controllers[index][3];
                               //quando aggiunge una riga pone inizializza km nella successiva
