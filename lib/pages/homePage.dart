@@ -7,10 +7,12 @@ import 'package:logbook1_0_0/pages/pageEquipaggiamento.dart';
 import 'package:logbook1_0_0/pages/pagePrimoSoccorso.dart';
 import 'package:logbook1_0_0/pages/pageVeicolo.dart';
 import 'package:logbook1_0_0/pages/pageDPI.dart';
-import 'package:logbook1_0_0/models/progressIndicator.dart';
+import 'package:logbook1_0_0/widgets/progressIndicator.dart';
 import 'package:logbook1_0_0/widgets/authentication.dart';
 import 'package:logbook1_0_0/providers.dart';
 import 'package:logbook1_0_0/widgets/screenSizeService.dart';
+import  'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+
 
 /*class HomePage extends StatefulWidget { 
   @override
@@ -168,7 +170,7 @@ class HomePage extends HookConsumerWidget {
                 );
               },
             ),
-        /**  ListTile(
+   /*    ListTile(
               title: const Text('Dotazioni Antincendio'),
               selected: selectedIndex == 5,
               onTap: () {
@@ -180,12 +182,12 @@ class HomePage extends HookConsumerWidget {
                       builder: (context) => const PageDotazioniAntincendio()),
                 );
               },
-            ),*/  
+            ), * */   
           ],
         ),
       ),
 //////////*DRAWER DRAWER*///////////////
-      ////////////*APPBARAPPBAR*//////////////
+////////////*APPBARAPPBAR*//////////////
       appBar: AppBar(
         backgroundColor: Colors.cyan[200],
         flexibleSpace: Image.asset('lib/assets/B1logo.png',
@@ -250,7 +252,7 @@ class HomePage extends HookConsumerWidget {
                           labelText: 'Data di oggi $formattedDate'),
                       onTap: () async {
                         // Show date picker
-                        final pickedDate = await showDatePicker(
+                        final pickedDate = await showRoundedDatePicker(
                           context: context,
                           initialDate: fixDate,
                           firstDate: DateTime(2000),

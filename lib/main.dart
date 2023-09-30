@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart'; //per utilizzare il Material design
 //import 'package:intl/intl.dart'; //per utilizare DateTime
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import  'package:logbook1_0_0/pages/homePage.dart';
-import 'package:logbook1_0_0/pages/pageVeicolo.dart';
 
 /*void main() {
   runApp(
@@ -32,10 +30,10 @@ class LogbookApp extends StatelessWidget {//MyApp is  LogbookApp!!!
            // primarySwatch: Colors.cyan,
           canvasColor: Colors.cyan[600],
           colorScheme: ColorScheme(brightness:Brightness.light,
-            primary:Colors.blue.shade600, onPrimary:Colors.blue,
-            secondary: Colors.cyan.shade100, onSecondary: Colors.cyan.shade200,
+            primary:Colors.blue.shade600, onPrimary:Colors.blue.shade400,
+            secondary: Colors.cyan.shade400, onSecondary: Colors.cyan.shade200,
             error: Colors.red.shade300, onError: Colors.red.shade200,
-            background: Colors.cyan.shade50, onBackground: Colors.blueGrey.shade100,
+            background: Colors.blueGrey.shade50, onBackground: Colors.blueGrey.shade300,
             surface: Colors.cyan.shade200, onSurface: Colors.blue.shade900),
           
             textTheme: TextTheme(bodyMedium:TextStyle (color: Colors.blue.shade900), // Adjust this color as needed

@@ -31,34 +31,9 @@ class _MyAppState extends State<MyApp> {
   }
 } */
 
-const _uuid = Uuid(); //ref pub.dev\uuid-3.0.7\lib\uuid.dart
-
 //provider to manage the total progress in app
 //final totalProgressProvider = StateProvider<int>((ref) => 0);
 bool _incremented = false;
-
-final checkProvider = StateNotifierProvider<Checklist, List<Check>>(
-  (ref) => Checklist([
-    Check(_uuid.v4(), "Guanti sterili monouso in nitrile (2 paia).", false),
-    Check(
-        _uuid.v4(),
-        "Flacone di soluzione cutanea di iodopovidone al 10% di iodio da 125 ml.",
-        false),
-    Check(
-        _uuid.v4(),
-        "Flacone di soluzione fisiologica (sodio cloruro 0,9%) da 250 ml (1).",
-        false),
-    Check(_uuid.v4(),
-        "Compresse di garza sterile 18 x 40 in buste singole (1).", false),
-    Check(_uuid.v4(), "Compresse di garza sterile 10 x 10 in buste singole (3)",
-        false),
-    /*Check(_uuid.v4(), "Item 6", false),
-    Check(_uuid.v4(), "Item 7", false),
-    Check(_uuid.v4(), "Item 8", false),
-    Check(_uuid.v4(), "Item 9", false),
-    Check(_uuid.v4(), "Item 10", false),*/
-  ]),
-);
 
 class CheckListView extends ConsumerWidget {
   const CheckListView({super.key});
@@ -126,11 +101,13 @@ class PagePrimoSoccorso extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('Building $runtimeType');
-
+    /*moved to a new Provider 
     final checks = ref.watch(checkProvider);
-    final bool allDone = checks.every((check) => check.checked);
+     bool allDone = checks.every((check) => check.checked);
+*/
+    final allDone = ref.watch(allDoneProvider);
 
-    void escape(bool allDone) {
+    void incrementa(bool allDone) {
       if (allDone && (!_incremented)) {
         ref.read(totalProgressProvider.notifier).state += 10;
         debugPrint('Building $runtimeType');
@@ -183,52 +160,20 @@ class PagePrimoSoccorso extends HookConsumerWidget {
       //floatingActionButton//floatingActionButton
       floatingActionButton: FloatingActionButton(
         tooltip: 'Blue se completato',
-        backgroundColor:
-            (allDone && (!_incremented)) ? Colors.blue.shade200 : Colors.grey.shade400,
+        backgroundColor: (allDone && (!_incremented))
+            ? Colors.blue.shade200
+            : Colors.grey.shade400,
         onPressed: () {
-          escape(allDone);
+          if (!_incremented) {
+            incrementa(allDone);
+
+            debugPrint('$_incremented');
+          }
         },
         child: const Icon(Icons.done_all_outlined),
       ),
 
 //floatingActionButton//floatingActionButton
     );
-  }
-}
-
-// classe dei controlli
-class Check {
-  final String id;
-  final String title;
-  final bool checked;
-  final String? description;
-
-  const Check(this.id, this.title, this.checked, [this.description]);
-}
-
-class Checklist extends StateNotifier<List<Check>> {
-  /*Checklist(): super([]); Checklist(super.state);*/
-  Checklist(List<Check> initialChecks) : super(initialChecks);
-
-  void addCheck(String title, String? description) {
-    state = [
-      ...state,
-      Check(_uuid.v4(), title, false, description),
-    ];
-  }
-
-  void toggle(String id, bool checked) {
-    state = [
-      for (final check in state)
-        if (check.id == id)
-          Check(
-            check.id,
-            check.title,
-            checked,
-            check.description,
-          )
-        else
-          check
-    ];
   }
 }

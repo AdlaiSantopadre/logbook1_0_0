@@ -1,11 +1,17 @@
 import "package:logbook1_0_0/models/modelDataBase.dart";
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logbook1_0_0/widgets/checklist.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:logbook1_0_0/models/modelUserCredential.dart';
 import 'package:logbook1_0_0/widgets/authentication copy.dart';
+import 'widgets/check.dart';
 
-final totalProgressProvider = StateProvider<int>((ref) => 5);
+final totalProgressProvider = StateProvider<int>((ref) => 5  );
 //used to manage the total progress ./
+/***final onallDonePagePrimoSoccorso = StateProvider<int>((ref)  { 
+  return ref.read(totalProgressProvider.notifier).state+= 10;
+} );*/
+
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 //used to manage the selected index Navigation Drawer
@@ -26,6 +32,34 @@ final databaseProvider = Provider<Future<Database>>((ref) async {
   return await databaseHelper.initDatabase();
 });
 
+//checkProvider who manage the state of a Checklist made of list of Check
+final checkProvider = StateNotifierProvider<Checklist, List<Check>>(
+  (ref) => Checklist([
+    Check(uuid.v4(), "Guanti sterili monouso in nitrile (2 paia).", false),
+    Check(
+        uuid.v4(),
+        "Flacone di soluzione cutanea di iodopovidone al 10% di iodio da 125 ml.",
+        false),
+    Check(
+        uuid.v4(),
+        "Flacone di soluzione fisiologica (sodio cloruro 0,9%) da 250 ml (1).",
+        false),
+    Check(uuid.v4(),
+        "Compresse di garza sterile 18 x 40 in buste singole (1).", false),
+    Check(uuid.v4(), "Compresse di garza sterile 10 x 10 in buste singole (3)",
+        false),
+    /*Check(_uuid.v4(), "Item 6", false),
+    Check(_uuid.v4(), "Item 7", false),
+    Check(_uuid.v4(), "Item 8", false),
+    Check(_uuid.v4(), "Item 9", false),
+    Check(_uuid.v4(), "Item 10", false),*/
+  ]),
+);
+
+final allDoneProvider = Provider<bool>((ref) {
+  final checks = ref.watch(checkProvider);
+  return checks.every((check) => check.checked);
+});
 
 
 //USER REGISTRATION PROVIDER
@@ -87,7 +121,7 @@ final authenticationProvider = Provider<Future<bool>>((ref) async {
     // Handle any errors that may occur during authentication
     print('Error during authentication: $e');
     // You can throw an error here or handle it based on your app's requirements
-    throw e;
+    rethrow;
   }
 });
 
@@ -148,6 +182,6 @@ final passwordStorageProvider = Provider<Future<bool>>((ref) async {
     // Handle any errors that may occur during password validation
     print('Error during password validation: $e');
     // You can throw an error here or handle it based on your app's requirements
-    throw e;
+    rethrow;
   }
 });

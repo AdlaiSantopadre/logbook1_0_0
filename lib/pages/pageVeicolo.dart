@@ -6,7 +6,7 @@ import 'package:logbook1_0_0/pages/subPageVeicolo.dart';
 import 'package:logbook1_0_0/providers.dart';
 import 'package:logbook1_0_0/widgets/screenSizeService.dart';
 import 'dart:io'; //for non web applications only!!!
-import 'dart:convert';
+import 'dart:convert';//ENCODING AND DECODING FROM JSON
 import 'package:path_provider/path_provider.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
