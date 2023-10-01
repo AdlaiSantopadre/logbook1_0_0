@@ -7,10 +7,16 @@ import 'package:logbook1_0_0/widgets/authentication copy.dart';
 import 'widgets/check.dart';
 
 final totalProgressProvider = StateProvider<int>((ref) => 5  );
-//used to manage the total progress ./
-/***final onallDonePagePrimoSoccorso = StateProvider<int>((ref)  { 
+//used to manage the total progress
+
+/*final onallDonePagePrimoSoccorso = StateProvider<int>((ref)  { 
   return ref.read(totalProgressProvider.notifier).state+= 10;
-} );*/
+} );
+*/
+//SNACK BAR Provider
+final snackbarMessageProvider = StateProvider<String>((ref) => '');
+final showSnackbarProvider = StateProvider<bool>((ref) => false);
+
 
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
@@ -40,7 +46,7 @@ final checkProvider = StateNotifierProvider<Checklist, List<Check>>(
         uuid.v4(),
         "Flacone di soluzione cutanea di iodopovidone al 10% di iodio da 125 ml.",
         false),
-    Check(
+    /*Check(
         uuid.v4(),
         "Flacone di soluzione fisiologica (sodio cloruro 0,9%) da 250 ml (1).",
         false),
@@ -48,11 +54,23 @@ final checkProvider = StateNotifierProvider<Checklist, List<Check>>(
         "Compresse di garza sterile 18 x 40 in buste singole (1).", false),
     Check(uuid.v4(), "Compresse di garza sterile 10 x 10 in buste singole (3)",
         false),
-    /*Check(_uuid.v4(), "Item 6", false),
-    Check(_uuid.v4(), "Item 7", false),
-    Check(_uuid.v4(), "Item 8", false),
-    Check(_uuid.v4(), "Item 9", false),
-    Check(_uuid.v4(), "Item 10", false),*/
+    
+    Check(uuid.v4(), "Pinzette da medicazione sterili monouso (1).", false),
+   
+    Check(uuid.v4(), "Confezione di cotone idrofilo (1).", false),
+    Check(uuid.v4(), "Confezioni di cerotti di varie misure pronti all'uso (1).", false),
+    
+    Check(uuid.v4(), "Rotoli di cerotto alto cm. 2,5 (2).", false),
+    Check(uuid.v4(), "Rotolo di benda orlata alta cm 10 (1).", false),
+    Check(uuid.v4(), "Un paio di forbici (1).", false),
+    Check(uuid.v4(), "Un laccio emostatico (1).", false),
+    Check(uuid.v4(), "Confezione di ghiaccio pronto uso (1).", false),
+    Check(uuid.v4(), "Sacchetti monouso per la raccolta di rifiuti sanitari (1).", false),
+    Check(uuid.v4(), "Istruzioni sul modo di usare i presidi suddetti e di prestare i primi soccorsi in attesa del servizio di emergenza.", false),
+    Check(uuid.v4(), "Gilet alta visibilità (solo per automezzo)", false),
+    Check(uuid.v4(), "Item 10", false),* */
+    
+    
   ]),
 );
 

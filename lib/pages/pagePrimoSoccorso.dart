@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:logbook1_0_0/pages/homePage.dart';
-import 'package:uuid/uuid.dart';
+//import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logbook1_0_0/pages/subPagePrimoSoccorso.dart';
@@ -101,17 +101,24 @@ class PagePrimoSoccorso extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('Building $runtimeType');
-    /*moved to a new Provider 
-    final checks = ref.watch(checkProvider);
-     bool allDone = checks.every((check) => check.checked);
-*/
+     var snackbarMessage = ref.watch(snackbarMessageProvider);
+    //final showSnackbar = ref.watch(showSnackbarProvider);
     final allDone = ref.watch(allDoneProvider);
 
-    void incrementa(bool allDone) {
+    void incrementsof10(bool allDone) {
       if (allDone && (!_incremented)) {
         ref.read(totalProgressProvider.notifier).state += 10;
         debugPrint('Building $runtimeType');
         _incremented = !_incremented;
+        // Update the snackbar message and show it
+        ref.read(snackbarMessageProvider.notifier).state = 'Incremento del 10%';
+        //ref.read(showSnackbarProvider.notifier).state = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.green.shade900,
+                content: Text(ref.read(snackbarMessageProvider.notifier).state = 'Incremento del 10%'),
+              ),
+            );
       }
     }
 
@@ -158,18 +165,19 @@ class PagePrimoSoccorso extends HookConsumerWidget {
       ),
 
       //floatingActionButton//floatingActionButton
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Blue se completato',
-        backgroundColor: (allDone && (!_incremented))
-            ? Colors.blue.shade200
-            : Colors.grey.shade400,
-        onPressed: () {
+      floatingActionButton:FloatingActionButton(
+         onPressed: () {
           if (!_incremented) {
-            incrementa(allDone);
-
+            incrementsof10(allDone);
+            
             debugPrint('$_incremented');
           }
         },
+        tooltip: 'A check list completata, premi!',
+        backgroundColor: (allDone && (!_incremented))
+            ? Colors.blue.shade200
+            : Colors.grey.shade400,
+       
         child: const Icon(Icons.done_all_outlined),
       ),
 

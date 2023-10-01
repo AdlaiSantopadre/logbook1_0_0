@@ -155,3 +155,9 @@ secondo regole comuni per password robuste.
 implementare la persistenza tramite l\`accesso ad un semplice database
 gestito con la libreria *sqflite* dove si può autenticare la coppia
 username-password.
+
+**Pagina Primo Soccorso**
+
+Propone la ispezione del pacchetto di medicazione previsto da decreto ministeriale 388 allegato 2 [allegato in sottopagina] e la compilazione di una checklist.
+Quando avviene la spunta di tutti gli elementi è possibile convalidare l'operato ottenendo un incremento del progresso totale sui compiti da eseguire  che compare visivamente al ritorno in HomePage.
+ Una volta azionato il pulsante di convalida,non è più permesso  di ripetere la procedura (è il pulsante ritorna disattivo)
